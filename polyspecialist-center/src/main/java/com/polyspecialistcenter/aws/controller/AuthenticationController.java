@@ -23,19 +23,19 @@ import com.polyspecialistcenter.aws.service.CredentialsService;
 public class AuthenticationController {
 	
 	@Autowired
-	private CredentialsService cs;
+	private CredentialsService credentialsService;
 	
 	@Autowired
-	private CredentialsValidator cv;
+	private CredentialsValidator credentialsValidator;
 	
 	@Autowired
-	private UtenteValidator uv;
+	private UtenteValidator utenteValidator;
 	
 	
 	//vai alla pagina di login
 	@GetMapping("/login")
     public String showLoginForm(Model model) {
-        return "authentication/loginForm.html";
+        return "";
     }
 	
 	//vai alla pagina di logout
@@ -45,21 +45,20 @@ public class AuthenticationController {
 	}
 	
 	
-	//vai alla pagin index (o admin/dashboard) dopo il login
+	//vai alla pagin index (o admin dashboard) dopo il login
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = cs.getCredentials(userDetails.getUsername());
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		
-		//superfluo perchè non uso una dashboard diversa per admin
-		/* if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/dashboard.html";
-		} */
+		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+			return "";
+		}
 
 		return "index.html";
 	}
 	
-	//vai alla pagin index (o admin/dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***
+	//vai alla pagin index (o admin dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***
 	@GetMapping("/defaultOauth")
 	public String oauthLogin(Model model) {
 		OAuth2User userDetails = (OAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -71,7 +70,7 @@ public class AuthenticationController {
 	public String getCredentials(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credenziali", new Credentials());
-		return "authentication/register.html";
+		return "";
 	}
 	
 	//configurazione form della pagina di registrazione di un utente
@@ -81,16 +80,16 @@ public class AuthenticationController {
 		utente.setCognome(utente.getCognome().toLowerCase());
 		utente.setNome(utente.getNome().toLowerCase());
 		
-		this.uv.validate(utente, utenteBindingResult);
-		this.cv.validate(credenziali, credenzialiBindingResult);
+		this.utenteValidator.validate(utente, utenteBindingResult);
+		this.credentialsValidator.validate(credenziali, credenzialiBindingResult);
 		
 		if(!credenzialiBindingResult.hasErrors() && !utenteBindingResult.hasErrors()) {
 			credenziali.setUtente(utente);  
-			cs.save(credenziali);  // this also stores the User, thanks to Cascade.ALL policy
+			credentialsService.save(credenziali);  // this also stores the User, thanks to Cascade.ALL policy
 			return "index.html";
 		}
 		
-		return "authentication/register.html";
+		return "";
 	}
 	
 }
