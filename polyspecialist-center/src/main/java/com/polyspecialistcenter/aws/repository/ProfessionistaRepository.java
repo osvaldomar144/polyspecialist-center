@@ -6,4 +6,6 @@ import com.polyspecialistcenter.aws.model.Professionista;
 
 public interface ProfessionistaRepository extends CrudRepository<Professionista, Long> {
 
+	boolean existsByPartitaIVA(String partitaIVA);
+
 }
