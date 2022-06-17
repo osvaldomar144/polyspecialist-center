@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.polyspecialistcenter.aws.model.Disponibilita;
 import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.repository.ProfessionistaRepository;
@@ -50,6 +51,12 @@ public class ProfessionistaService {
 	public void addServizio(Professionista professionista, Servizio servizio) {
 		professionista.getServizi().add(servizio);
 		servizio.setProfessionista(professionista);
+		this.professionistaRepository.save(professionista);
+	}
+	
+	@Transactional
+	public void addDisponibilita(Professionista professionista, Disponibilita disponibilita) {
+		professionista.getDisponibilita().add(disponibilita);
 		this.professionistaRepository.save(professionista);
 	}
 
