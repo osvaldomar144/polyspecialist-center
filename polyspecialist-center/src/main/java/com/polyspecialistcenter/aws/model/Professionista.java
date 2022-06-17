@@ -2,6 +2,7 @@ package com.polyspecialistcenter.aws.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,13 +31,13 @@ public class Professionista {
 	
 	private String img;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servizio> servizi;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Disponibilita> disponibilita;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Appuntamento> appuntamenti; 
 	
 	public Long getId() {
