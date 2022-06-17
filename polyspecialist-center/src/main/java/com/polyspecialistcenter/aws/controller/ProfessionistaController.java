@@ -32,7 +32,7 @@ public class ProfessionistaController {
 		return "paginaProfessionista";
 	}
 	
-	@GetMapping("/elencoProfessionisti")
+	@GetMapping("/professionisti")
 	public String getProfessionisti(Model model) {
 		model.addAttribute("professionisti", this.professionistaService.findAll());
 		
@@ -94,4 +94,5 @@ public class ProfessionistaController {
 		
 		return "formModificaProfessionista";
 	}
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.polyspecialistcenter.aws.model.Professionista;
+import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.repository.ProfessionistaRepository;
 
 @Service
@@ -43,6 +44,12 @@ public class ProfessionistaService {
 		professionista.setCognome(newProfessionista.getCognome());
 		professionista.setImg(newProfessionista.getImg());
 		professionista.setPartitaIVA(newProfessionista.getPartitaIVA());
+	}
+	
+	@Transactional
+	public void addServizio(Professionista professionista, Servizio servizio) {
+		professionista.getServizi().add(servizio);
+		servizio.setProfessionista(professionista);
 		this.professionistaRepository.save(professionista);
 	}
 
