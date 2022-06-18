@@ -28,7 +28,7 @@ public class GeneralController {
 	
 	@GetMapping("/admin")
 	public String get() {
-		return "";
+		return "redirect/" + "admin/professionisti";
 	}
 	
 }
