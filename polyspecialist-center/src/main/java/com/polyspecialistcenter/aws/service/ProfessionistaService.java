@@ -40,11 +40,13 @@ public class ProfessionistaService {
 		this.professionistaRepository.delete(professionista);
 	}
 	
+	@Transactional
 	public void update(Professionista professionista, Professionista newProfessionista) {
 		professionista.setNome(newProfessionista.getNome());
 		professionista.setCognome(newProfessionista.getCognome());
 		professionista.setImg(newProfessionista.getImg());
 		professionista.setPartitaIVA(newProfessionista.getPartitaIVA());
+		this.professionistaRepository.save(professionista);
 	}
 	
 	@Transactional
@@ -55,8 +57,23 @@ public class ProfessionistaService {
 	}
 	
 	@Transactional
-	public void addDisponibilita(Professionista professionista, Disponibilita disponibilita) {
+	public void addDisponibilita(Long id, Disponibilita disponibilita) {
+		Professionista professionista = this.findById(id);
 		professionista.getDisponibilita().add(disponibilita);
+		disponibilita.setProfessionista(professionista);
+		this.professionistaRepository.save(professionista);
+	}
+
+	@Transactional
+	public void deleteDisponibilita(Disponibilita disponibilita) {
+		Professionista professionista = disponibilita.getProfessionista();
+		professionista.getDisponibilita().remove(disponibilita);
+		this.professionistaRepository.save(professionista);
+	}
+
+	@Transactional
+	public void deleteServizio(Professionista professionista, Servizio servizio) {
+		professionista.getServizi().remove(servizio);
 		this.professionistaRepository.save(professionista);
 	}
 

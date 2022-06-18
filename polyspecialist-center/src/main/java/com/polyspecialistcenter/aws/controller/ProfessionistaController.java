@@ -59,9 +59,8 @@ public class ProfessionistaController {
 		
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.save(professionista);
-			model.addAttribute("professionisti", this.professionistaService.findAll());
 			
-			return "listaProfessionisti";
+			return this.getProfessionisti(model);
 		}
 		
 		return "formNuovoProfessionista";
@@ -75,9 +74,8 @@ public class ProfessionistaController {
 	public String deleteProfessionista(@PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
 		this.professionistaService.delete(professionista);
-		model.addAttribute("professionisti", this.professionistaService.findAll());
 		
-		return "listaProfessionisti";
+		return this.getProfessionisti(model);
 	}
 	
 	// --- MODIFICA
@@ -92,18 +90,17 @@ public class ProfessionistaController {
 	
 	@PostMapping("/admin/professionista/edit/{id}")
 	public String editProfessionista(@Valid @ModelAttribute("professionista") Professionista newProfessionista, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
-		Professionista professionista = professionistaService.findById(id);
 		
 		this.professionistaValidator.validate(newProfessionista, bindingResult);
 		if(!bindingResult.hasErrors()) {
+			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.update(professionista, newProfessionista);
-			model.addAttribute("professionisti", this.professionistaService.findAll());
 			
-			return "listaProfessionisti";
+			return this.getProfessionisti(model);
 		}
 		
 		newProfessionista.setId(id);
-		model.addAttribute("professionista", professionista);
+		model.addAttribute("professionista", newProfessionista);
 		
 		return "formModificaProfessionista";
 	}

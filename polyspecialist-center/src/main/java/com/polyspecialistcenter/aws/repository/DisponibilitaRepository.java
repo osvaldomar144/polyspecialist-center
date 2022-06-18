@@ -6,9 +6,10 @@ import java.time.LocalTime;
 import org.springframework.data.repository.CrudRepository;
 
 import com.polyspecialistcenter.aws.model.Disponibilita;
+import com.polyspecialistcenter.aws.model.Professionista;
 
 public interface DisponibilitaRepository extends CrudRepository<Disponibilita, Long> {
 
-	public boolean existsByDataAndOraInizioAndOraFine(LocalDate data, LocalTime oraInizio, LocalTime oraFine);
+	public boolean existsByDataAndOraInizioAndOraFineAndProfessionista(LocalDate data, LocalTime oraInizio, LocalTime oraFine, Professionista professionista);
 
 }

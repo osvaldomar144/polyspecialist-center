@@ -25,10 +25,12 @@ public class ServizioService {
 		this.servizioRepository.delete(servizio);
 	}
 	
+	@Transactional
 	public void update(Servizio servizio, Servizio newServizio) {
 		servizio.setNome(newServizio.getNome());
 		servizio.setDescrizione(newServizio.getDescrizione());
 		servizio.setPrezzo(newServizio.getPrezzo());
+		this.servizioRepository.save(servizio);
 	}
 
 	public Servizio findById(Long id) {

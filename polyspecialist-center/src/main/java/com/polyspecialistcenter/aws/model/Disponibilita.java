@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -24,6 +25,9 @@ public class Disponibilita {
 	
 	@NotBlank
 	private LocalTime oraFine;
+	
+	@ManyToOne
+	private Professionista professionista;
 	
 	public Long getId() {
 		return id;
@@ -55,6 +59,14 @@ public class Disponibilita {
 
 	public void setOraFine(LocalTime oraFine) {
 		this.oraFine = oraFine;
+	}
+
+	public Professionista getProfessionista() {
+		return professionista;
+	}
+
+	public void setProfessionista(Professionista professionista) {
+		this.professionista = professionista;
 	}
 	
 }
