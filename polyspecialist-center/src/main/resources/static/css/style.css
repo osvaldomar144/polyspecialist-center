@@ -145,6 +145,7 @@ a:hover {
 .nav-item.active:hover:after {
 	opacity: 0;
 }
+
 .nav-item {
 	position: relative;
 	transition: all 200ms linear;
@@ -193,7 +194,6 @@ a:hover {
 	color: #111;
 	background-color: #ace7ee;
 }
-
 
 /* SECTION HERO */
 
@@ -680,7 +680,24 @@ h1 span:nth-child(15) {
 }
 
 
+/* GENERIC */
+.generic_section {
+	padding: 12% 0px;
+	
+}
+
+
+
+
 /* RESPONSIVE */
+
+@media ( max-width : 1050px) {
+	.generic_section {
+		padding: 18% 0px;
+	}
+}
+
+
 
 @media (max-width: 767px) {
 	h1 {
@@ -734,5 +751,21 @@ h1 span:nth-child(15) {
 
 	.full-height {
 		height: 75vh;
+	}
+
+	.generic_section {
+		padding: 22% 0px;
+	}
+}
+
+@media ( max-width : 575px) {
+	.generic_section {
+		padding: 33% 2%;
+	}
+}
+
+@media ( max-width : 370px) {
+	.generic_section {
+		padding: 37% 3%;
 	}
 }

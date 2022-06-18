@@ -8,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.polyspecialistcenter.aws.controller.validator.CredentialsValidator;
 import com.polyspecialistcenter.aws.controller.validator.UtenteValidator;
@@ -31,30 +32,55 @@ public class AuthenticationController {
 	private UtenteValidator utenteValidator;
 	
 	
-	//vai alla pagina di login
-	@GetMapping("/login")
-    public String showLoginForm(Model model) {
-        return "index";
-    }
+	@RequestMapping(value="/register", method=RequestMethod.GET)
+	public String showRegisterForm(Model model) {
+		model.addAttribute("utente", new Utente());
+		model.addAttribute("credentials", new Credentials());
+		return "authentication/registerForm";
+	}
 	
-	//vai alla pagina di logout
-	@GetMapping("/logout")
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String showLoginForm(Model model) {
+		return "authentication/loginForm";
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(Model model) {
-		return "index.html";
+		return "index";
 	}
 	
 	
-	//vai alla pagin index (o admin dashboard) dopo il login
-	@GetMapping("/default")
+	@RequestMapping(value="/default", method=RequestMethod.GET)
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		
 		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "";
+			return "admin/dashboard";
 		}
+		//qua meglio profilo
+		return "index";
 
-		return "index.html";
+	}
+	
+	@PostMapping(value= {"/register"})
+	public String registerUser(@Valid @ModelAttribute("utente") Utente user,
+								BindingResult utenteBindingResult, 
+							   @Valid @ModelAttribute("credentials") Credentials credentials,
+							    BindingResult credentialsBindingResult,
+							    Model model) {
+		
+        // validazione user e credenziali
+        this.utenteValidator.validate(user, utenteBindingResult);
+        this.credentialsValidator.validate(credentials, credentialsBindingResult);
+
+		if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+			user.setImg("icon-default-user.png");
+			credentials.setUtente(user);
+			credentialsService.save(credentials);
+			return "authentication/registrationSuccessful";
+		}
+		return "authentication/registerForm";
+		
 	}
 	
 	/*//vai alla pagin index (o admin dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***
@@ -63,32 +89,5 @@ public class AuthenticationController {
 		OAuth2User userDetails = (OAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return "index.html";
 	}*/
-	
-	//vai alla pgina di registrazione di un utente
-	@GetMapping("/register")
-	public String getCredentials(Model model) {
-		model.addAttribute("utente", new Utente());
-		model.addAttribute("credenziali", new Credentials());
-		return "index";
-	}
-	
-	//configurazione form della pagina di registrazione di un utente
-	@PostMapping("/register")
-	public String addCredentials(@Valid @ModelAttribute ("utente") Utente utente, BindingResult utenteBindingResult, @Valid @ModelAttribute("credenziali") Credentials credenziali, BindingResult credenzialiBindingResult, Model model) {
-		
-		utente.setCognome(utente.getCognome().toLowerCase());
-		utente.setNome(utente.getNome().toLowerCase());
-		
-		this.utenteValidator.validate(utente, utenteBindingResult);
-		this.credentialsValidator.validate(credenziali, credenzialiBindingResult);
-		
-		if(!credenzialiBindingResult.hasErrors() && !utenteBindingResult.hasErrors()) {
-			credenziali.setUtente(utente);  
-			credentialsService.save(credenziali);  // this also stores the User, thanks to Cascade.ALL policy
-			return "index";
-		}
-		
-		return "index";
-	}
 	
 }
