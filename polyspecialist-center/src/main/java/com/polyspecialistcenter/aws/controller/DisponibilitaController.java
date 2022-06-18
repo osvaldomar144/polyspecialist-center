@@ -1,5 +1,8 @@
 package com.polyspecialistcenter.aws.controller;
 
+import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_ADMIN_PAGES_DISP;
+import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_PAGES_DISP;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.DisponibilitaValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
-import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_ADMIN_PAGES_DISP;
-import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_PAGES_DISP;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 
@@ -62,7 +63,7 @@ public class DisponibilitaController {
 	@PostMapping("/admin/disponibilita/add/{id}")
 	public String addDisponibilita(@Valid @ModelAttribute("disponibilita") Disponibilita disponibilita, BindingResult bindingResult, 
 									@PathVariable("id") Long id, Model model) {
-		
+		System.out.println(disponibilita.getData().toString() + ' ' + disponibilita.getOraInizio().toString());
 		this.disponibilitaValidator.validate(disponibilita, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.addDisponibilita(id, disponibilita);
@@ -79,9 +80,10 @@ public class DisponibilitaController {
 	@GetMapping("/admin/disponibilita/delete/{id}")
 	public String deleteDisponibilita(@PathVariable("id") Long id, Model model) {
 		Disponibilita disponibilita = this.disponibilitaService.findById(id);
+		Long idProf = disponibilita.getProfessionista().getId();
 		this.professionistaService.deleteDisponibilita(disponibilita);
 		
-		return this.getAdminDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
+		return this.getAdminDisponibilitaProfessionista(idProf, model);
 	}
 	
 	// --- MODIFICA
