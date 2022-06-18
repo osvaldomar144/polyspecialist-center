@@ -29,7 +29,7 @@ public class Utente {
 	
 	private String img;
 	
-	@OneToOne
+	@OneToOne (mappedBy="utente")
 	private Credentials credentials;
 	
 	@OneToMany
