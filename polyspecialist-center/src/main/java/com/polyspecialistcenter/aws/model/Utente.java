@@ -24,8 +24,8 @@ public class Utente {
 	@NotBlank
 	private String cognome;
 	
-	@NotBlank
-	private LocalDate dataDiNascita;
+	/*@NotBlank
+	private LocalDate dataDiNascita;*/
 	
 	private String img;
 	
@@ -59,13 +59,13 @@ public class Utente {
 		this.cognome = cognome;
 	}
 	
-	public LocalDate getDataDiNascita() {
+	/*public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
 
 	public void setDataDiNascita(LocalDate dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
-	}
+	}*/
 
 	public String getImg() {
 		return img;
