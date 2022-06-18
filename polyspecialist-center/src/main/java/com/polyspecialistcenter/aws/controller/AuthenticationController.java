@@ -55,11 +55,10 @@ public class AuthenticationController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/dashboard";
+			return "redirect:/" + "admin/professionisti";
 		}
-		//qua meglio profilo
-		return "index";
-
+		
+		return "authentication/profile";
 	}
 	
 	@PostMapping(value= {"/register"})
@@ -79,8 +78,8 @@ public class AuthenticationController {
 			credentialsService.saveCredentials(credentials);
 			return "authentication/registrationSuccessful";
 		}
-		return "authentication/registerForm";
 		
+		return "authentication/registerForm";
 	}
 	
 	/*//vai alla pagin index (o admin dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***

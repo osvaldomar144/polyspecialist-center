@@ -34,13 +34,13 @@ public class Professionista {
 	
 	private String img;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professionista")
 	private List<Servizio> servizi;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professionista")
 	private List<Disponibilita> disponibilita;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professionista")
 	private List<Appuntamento> appuntamenti; 
 	
 	public Long getId() {
