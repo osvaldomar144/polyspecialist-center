@@ -12,7 +12,7 @@
 
 
 			<div class="form_container mb-5">
-				<form th:action="@{/admin/disponibilita/add/ + ${id}}" method="post" th:object="${disponibilita}" enctype="multipart/form-data">
+				<form th:action="@{/admin/disponibilita/add} + '/' + ${id}" method="post" th:object="${disponibilita}" enctype="multipart/form-data">
 					<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
 						<h4 align="center" th:each="err : ${#fields.globalErrors()}" th:text="'Errore: ' + ${err}">...</h4>
 					</div>

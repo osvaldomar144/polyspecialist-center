@@ -1,8 +1,5 @@
 package com.polyspecialistcenter.aws.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,13 +18,13 @@ public class Disponibilita {
 	private Long id;
 	
 	@NotBlank
-	private LocalDate data;
+	private String data;
 	
 	@NotBlank
-	private LocalTime oraInizio;
+	private String oraInizio;
 	
 	@NotBlank
-	private LocalTime oraFine;
+	private String oraFine;
 	
 	@ManyToOne
 	private Professionista professionista;
@@ -40,27 +37,27 @@ public class Disponibilita {
 		this.id = id;
 	}
 
-	public LocalDate getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
-	public LocalTime getOraInizio() {
+	public String getOraInizio() {
 		return oraInizio;
 	}
 
-	public void setOraInizio(LocalTime oraInizio) {
+	public void setOraInizio(String oraInizio) {
 		this.oraInizio = oraInizio;
 	}
 
-	public LocalTime getOraFine() {
+	public String getOraFine() {
 		return oraFine;
 	}
 
-	public void setOraFine(LocalTime oraFine) {
+	public void setOraFine(String oraFine) {
 		this.oraFine = oraFine;
 	}
 
