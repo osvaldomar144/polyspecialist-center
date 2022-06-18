@@ -686,6 +686,11 @@ h1 span:nth-child(15) {
 	
 }
 
+/* login */
+.img-login {
+	width: 95%; 
+	margin-top: -15%;
+}
 
 
 
@@ -755,6 +760,10 @@ h1 span:nth-child(15) {
 
 	.generic_section {
 		padding: 22% 0px;
+	}
+	
+	.img-login {
+		margin-top: 20px;
 	}
 }
 

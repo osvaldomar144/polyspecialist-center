@@ -54,11 +54,17 @@
 										<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="nav-link" href="#">Professionisti</a>
 										</li>
-										<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<li sec:authorize="!isAuthenticated()" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="btn btn-sm btn-success mb-2" th:href="@{/login}">Login</a>
 										</li>
-										<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<li sec:authorize="!isAuthenticated()" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="btn btn-sm btn-info" th:href="@{/register}">Register</a>
+										</li>
+										<li sec:authorize="isAuthenticated()" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+											<a class="btn btn-sm btn-info mb-2" th:href="@{/profile}">Profilo</a>
+										</li>
+										<li sec:authorize="isAuthenticated()" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+											<a class="btn btn-sm btn-danger" th:href="@{/logout}">LogOut</a>
 										</li>
 									</ul>
 								</div>
