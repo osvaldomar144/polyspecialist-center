@@ -39,15 +39,15 @@ public class ProfessionistaController {
 		return "listaProfessionisti";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/admin/professionista/add")
 	public String addProfessionista(Model model) {
 		model.addAttribute("professionista", new Professionista());
 		
 		return "formNuovoProfessionista";
 	}
 	
-	@PostMapping("/add")
-	public String addProfessionista(@Valid @ModelAttribute Professionista professionista, BindingResult bindingResult, Model model) {
+	@PostMapping("/admin/professionista/add")
+	public String addNewProfessionista(@Valid @ModelAttribute("professionista") Professionista professionista, BindingResult bindingResult, Model model) {
 		this.professionistaValidator.validate(professionista, bindingResult);
 		
 		if(!bindingResult.hasErrors()) {
@@ -59,8 +59,8 @@ public class ProfessionistaController {
 		
 		return "formNuovoProfessionista";
 	}
-	
-	@GetMapping("/delete/{id}")
+	/* root permesso / entita / azione / parametri */
+	@GetMapping("/admin/professionista/delete/{id}")
 	public String deleteProfessionista(@PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
 		this.professionistaService.delete(professionista);
@@ -69,16 +69,16 @@ public class ProfessionistaController {
 		return "listaProfessionisti";
 	}
 	
-	@GetMapping("/edit/{id}")
-	public String editProfessionista(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/admin/professionista/edit/{id}")
+	public String getEditProfessionista(@PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
 		model.addAttribute("professionista", professionista);
 		
 		return "formModificaProfessionista";
 	}
 	
-	@PostMapping("/edit/{id}")
-	public String editProfessionista(@Valid @ModelAttribute Professionista newProfessionista, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	@PostMapping("/admin/professionista/edit/{id}")
+	public String editProfessionista(@Valid @ModelAttribute("professionista") Professionista newProfessionista, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
 		
 		this.professionistaValidator.validate(newProfessionista, bindingResult);
