@@ -22,7 +22,7 @@ public class DisponibilitaValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		if(this.disponibilitaService.alreadyExists((Disponibilita) target))
-			errors.reject("disponivilita.duplicato");
+			errors.reject("disponibilita.duplicato");
 	}
 
 }

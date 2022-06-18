@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Disponibilita {
@@ -20,13 +19,10 @@ public class Disponibilita {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank
 	private LocalDate data;
 	
-	@NotBlank
 	private LocalTime oraInizio;
 	
-	@NotBlank
 	private LocalTime oraFine;
 	
 	@ManyToOne
