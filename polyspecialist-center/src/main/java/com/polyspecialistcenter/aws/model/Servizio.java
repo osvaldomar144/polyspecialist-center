@@ -23,8 +23,8 @@ public class Servizio {
 	@NotBlank
 	private String descrizione;
 	
-	@NotBlank
-	private float prezzo;
+	/*@NotBlank*/
+	private Float prezzo;
 	
 	@ManyToOne
 	private Professionista professionista;
@@ -53,11 +53,11 @@ public class Servizio {
 		this.descrizione = descrizione;
 	}
 
-	public float getPrezzo() {
+	public Float getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(float prezzo) {
+	public void setPrezzo(Float prezzo) {
 		this.prezzo = prezzo;
 	}
 
