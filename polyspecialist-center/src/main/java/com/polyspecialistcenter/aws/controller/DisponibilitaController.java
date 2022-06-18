@@ -29,17 +29,16 @@ public class DisponibilitaController {
 	@Autowired
 	private ProfessionistaService professionistaService;
 	
-	/*@GetMapping("/professionista/add/{id}")
+	@GetMapping("/admin/disponibilita/add/{id}")
 	public String addGetDisponibilita(@PathVariable("id") Long id, Model model) {
-		Professionista professionista = this.professionistaService.findById(id);
-		model.addAttribute("professionista", professionista);
+		model.addAttribute("idProfessionista", id);
 		model.addAttribute("disponibilita", new Disponibilita());
 		
 		return "formNuovaDisponibilita";
-	}*/
+	}
 	
-	/*@PostMapping("/professionista/add/{id}")
-	public String addDisponibilita(@Valid @ModelAttribute Disponibilita disponibilita, BindingResult bindingResult, 
+	@PostMapping("/admin/disponibilita/add/{id}")
+	public String addDisponibilita(@Valid @ModelAttribute("disponibilita") Disponibilita disponibilita, BindingResult bindingResult, 
 									@PathVariable("id") Long id, Model model) {
 		Professionista professionista = this.professionistaService.findById(id);
 		
@@ -54,7 +53,7 @@ public class DisponibilitaController {
 		
 		model.addAttribute("professionista", professionista);
 		return "formNuovaDisponibilita";
-	}*/
+	}
 	
 	@GetMapping("/professionista/{idProfessionista}/delete/{idDisponibilita}")
 	public String deleteDisponibilita(@PathVariable("idProfessionista") Long idProfessionista, @PathVariable("idDisponibilita") Long idDisponibilita, Model model) {
