@@ -12,7 +12,7 @@
 
 
 			<div class="form_container mb-5">
-				<form th:action="@{/admin/servizio/add/ + ${id}}" method="post" th:object="${servizio}" enctype="multipart/form-data">
+				<form th:action="@{/admin/servizio/add/} + ${id}" method="post" th:object="${servizio}" enctype="multipart/form-data">
 					<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
 						<h4 align="center" th:each="err : ${#fields.globalErrors()}" th:text="'Errore: ' + ${err}">...</h4>
 					</div>
@@ -22,7 +22,7 @@
 					<div class="form-group"><input type="text" class="form-control" placeholder="Descrizione" th:field="*{descrizione}"></div>
 					<div th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}" class="alert alert-danger" role="alert"></div>
 
-					<div class="form-group"><input type="text" class="form-control" placeholder="Prezzo" th:field="*{prezzo}">
+					<div class="form-group"><input type="number" step="0.1" class="form-control" placeholder="Prezzo" th:field="*{prezzo}">
 					</div>
 					<div th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}" class="alert alert-danger" role="alert">
 					</div>
