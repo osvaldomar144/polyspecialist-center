@@ -40,5 +40,9 @@ public class ServizioService {
 	public List<Servizio> findAll() {
 		return (List<Servizio>) this.servizioRepository.findAll();
 	}
+	
+	public List<Servizio> findLastServizi() {
+		return this.servizioRepository.findTopN(6);
+	}
 
 }

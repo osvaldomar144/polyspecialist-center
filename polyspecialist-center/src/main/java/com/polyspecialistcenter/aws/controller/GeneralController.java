@@ -1,13 +1,10 @@
 package com.polyspecialistcenter.aws.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.polyspecialistcenter.aws.model.Professionista;
-import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
 
@@ -21,16 +18,12 @@ public class GeneralController {
 	private ProfessionistaService professionistaService;
 
 	@GetMapping("/")
-	public String getServiziAndProfessionisti() {
-		List<Professionista> professionisti = this.professionistaService.findAll();
-		List<Servizio> servizi = this.servizioService.findAll();
+	public String getServiziAndProfessionisti(Model model) {
 		
-		List<Professionista> lastProfessionisti()
-		for(int i = 0; i < 6; i++) {
-			
-		}
+		model.addAttribute("professionisti", this.professionistaService.findLastProfessionisti());
+		model.addAttribute("servizi", this.servizioService.findLastServizi());
 		
-		return "";
+		return "index";
 	}
 	
 	@GetMapping("/admin")

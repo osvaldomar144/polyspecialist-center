@@ -77,4 +77,8 @@ public class ProfessionistaService {
 		this.professionistaRepository.save(professionista);
 	}
 
+	public List<Professionista> findLastProfessionisti() {
+		return this.professionistaRepository.findTopN(6);
+	}
+
 }
