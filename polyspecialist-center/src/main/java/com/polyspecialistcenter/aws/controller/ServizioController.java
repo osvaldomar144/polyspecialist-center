@@ -46,7 +46,7 @@ public class ServizioController {
 	
 	@GetMapping("/admin/servizio/add/{id}")
 	public String selezionaServizio(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("", this.professionistaService.findById(id));
+		model.addAttribute("id", id);
 		model.addAttribute("servizio", new Servizio());
 		
 		return "formServizioNuovo";
@@ -54,16 +54,17 @@ public class ServizioController {
 	
 	@PostMapping("/admin/servizio/add/{id}")
 	public String addServizio(@Valid @ModelAttribute("servizio") Servizio servizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
-		Professionista professionista = professionistaService.findById(id);
 		
 		this.servizioValidator.validate(servizio, bindingResult);
 		if(!bindingResult.hasErrors()) {
+			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.addServizio(professionista, servizio);
 			model.addAttribute("professionista", professionista);
 			
-			return "elencoSeriviziDelProfessionista";
+			return "professionista";
 		}
 		
+		model.addAttribute("id", id);
 		return "formServizioNuovo";
 	}
 	
@@ -71,10 +72,10 @@ public class ServizioController {
 	public String deleteServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		Professionista professionista = servizio.getProfessionista();
-		this.servizioService.delete(servizio);
+		this.professionistaService.deleteServizio(professionista, servizio);
 		model.addAttribute("professionista", professionista);
 		
-		return "elencoSeriviziDelProfessionista";
+		return "professionista";
 	}
 	
 	@GetMapping("/admin/servizio/edit/{id}")
@@ -87,14 +88,14 @@ public class ServizioController {
 	
 	@PostMapping("/admin/servizio/edit/{id}")
 	public String editServizio(@Valid @ModelAttribute("servizio") Servizio newServizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
-		Servizio servizio = this.servizioService.findById(id);
 		
-		this.servizioValidator.validate(servizio, bindingResult);
+		this.servizioValidator.validate(newServizio, bindingResult);
 		if(!bindingResult.hasErrors()) {
+			Servizio servizio = this.servizioService.findById(id);
 			this.servizioService.update(servizio, newServizio);
 			model.addAttribute("professionista", servizio.getProfessionista());
 			
-			return "elencoSeriviziDelProfessionista";
+			return "professionista";
 		}
 		
 		newServizio.setId(id);
