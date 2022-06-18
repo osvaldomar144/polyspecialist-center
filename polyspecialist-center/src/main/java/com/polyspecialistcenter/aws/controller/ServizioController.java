@@ -30,7 +30,7 @@ public class ServizioController {
 	private ProfessionistaService professionistaService;
 	
 	@GetMapping("/servizio/{id}")
-	public String getSerivizio(@PathVariable("id") Long id, Model model) {
+	public String getServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		model.addAttribute("servizio", servizio);
 		
@@ -44,16 +44,16 @@ public class ServizioController {
 		return "elencoServizi";
 	}
 	
-	@GetMapping("/professionista/{id}/add")
-	public String addServizio(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/admin/servizio/add/{id}")
+	public String selezionaServizio(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("", this.professionistaService.findById(id));
 		model.addAttribute("servizio", new Servizio());
 		
 		return "formServizioNuovo";
 	}
 	
-	@PostMapping("/professionista/{id}/add")
-	public String addServizio(@Valid @ModelAttribute Servizio servizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	@PostMapping("/admin/servizio/add/{id}")
+	public String addServizio(@Valid @ModelAttribute("servizio") Servizio servizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
 		
 		this.servizioValidator.validate(servizio, bindingResult);
@@ -67,7 +67,7 @@ public class ServizioController {
 		return "formServizioNuovo";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/admin/servizio/delete/{id}")
 	public String deleteServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		Professionista professionista = servizio.getProfessionista();
@@ -77,16 +77,16 @@ public class ServizioController {
 		return "elencoSeriviziDelProfessionista";
 	}
 	
-	@GetMapping("/edit/{id}")
-	public String editServizio(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/admin/servizio/edit/{id}")
+	public String getEditServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		model.addAttribute("servizio", servizio);
 		
 		return "formModificaServizio";
 	}
 	
-	@PostMapping("/edit/{id}")
-	public String editServizio(@Valid @ModelAttribute Servizio newServizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	@PostMapping("/admin/servizio/edit/{id}")
+	public String editServizio(@Valid @ModelAttribute("servizio") Servizio newServizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		
 		this.servizioValidator.validate(servizio, bindingResult);

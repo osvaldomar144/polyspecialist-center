@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +34,7 @@ public class AuthenticationController {
 	//vai alla pagina di login
 	@GetMapping("/login")
     public String showLoginForm(Model model) {
-        return "";
+        return "index";
     }
 	
 	//vai alla pagina di logout
@@ -58,19 +57,19 @@ public class AuthenticationController {
 		return "index.html";
 	}
 	
-	//vai alla pagin index (o admin dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***
+	/*//vai alla pagin index (o admin dashboard) dopo il login con OAuth ***DA MODELLARE BENE SE SI RITIENE UTILE***
 	@GetMapping("/defaultOauth")
 	public String oauthLogin(Model model) {
 		OAuth2User userDetails = (OAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return "index.html";
-	}
+	}*/
 	
 	//vai alla pgina di registrazione di un utente
 	@GetMapping("/register")
 	public String getCredentials(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credenziali", new Credentials());
-		return "";
+		return "index";
 	}
 	
 	//configurazione form della pagina di registrazione di un utente
@@ -86,10 +85,10 @@ public class AuthenticationController {
 		if(!credenzialiBindingResult.hasErrors() && !utenteBindingResult.hasErrors()) {
 			credenziali.setUtente(utente);  
 			credentialsService.save(credenziali);  // this also stores the User, thanks to Cascade.ALL policy
-			return "index.html";
+			return "index";
 		}
 		
-		return "";
+		return "index";
 	}
 	
 }
