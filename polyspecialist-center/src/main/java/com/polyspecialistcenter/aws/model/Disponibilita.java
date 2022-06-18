@@ -13,6 +13,9 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Disponibilita {
 	
+	public static final String DIR_PAGES_DISP = "information/disponibilita/";
+	public static final String DIR_ADMIN_PAGES_DISP = "admin/disponibilita/";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

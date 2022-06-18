@@ -10,6 +10,9 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Servizio {
 	
+	public static final String DIR_PAGES_SERVIZIO = "information/servizio/";
+	public static final String DIR_ADMIN_PAGES_SERVIZIO = "admin/servizio/";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

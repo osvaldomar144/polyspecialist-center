@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.DisponibilitaValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
+import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_ADMIN_PAGES_DISP;
+import static com.polyspecialistcenter.aws.model.Disponibilita.DIR_PAGES_DISP;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 
@@ -28,19 +30,33 @@ public class DisponibilitaController {
 	@Autowired
 	private ProfessionistaService professionistaService;
 	
-	@GetMapping("/professionista/disponibilita/{id}")
+	
+	/* METHODS GENERIC_USER */
+	
+	@GetMapping("/disponibilita/{id}")
 	public String getDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("disponibilitaList", this.professionistaService.findById(id).getDisponibilita());
 		
-		return "elencoDisponibilitaProfessionista";
+		return DIR_PAGES_DISP + "elencoDisponibilita";
 	}
+	
+	/* METHODS ADMIN */
+	
+	@GetMapping("/admin/disponibilita/{id}")
+	public String getAdminDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("disponibilitaList", this.professionistaService.findById(id).getDisponibilita());
+		
+		return DIR_ADMIN_PAGES_DISP + "adminElencoDisponibilita";
+	}
+	
+	// --- INSERIMENTO
 	
 	@GetMapping("/admin/disponibilita/add/{id}")
 	public String addGetDisponibilita(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("idProfessionista", id);
 		model.addAttribute("disponibilita", new Disponibilita());
 		
-		return "formNuovaDisponibilita";
+		return DIR_ADMIN_PAGES_DISP + "disponibilitaForm";
 	}
 	
 	@PostMapping("/admin/disponibilita/add/{id}")
@@ -51,26 +67,30 @@ public class DisponibilitaController {
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.addDisponibilita(id, disponibilita);
 			
-			return this.getDisponibilitaProfessionista(id, model);
+			return this.getAdminDisponibilitaProfessionista(id, model);
 		}
 		
 		model.addAttribute("id", id);
-		return "formNuovaDisponibilita";
+		return DIR_ADMIN_PAGES_DISP + "disponibilitaForm";
 	}
+	
+	// --- ELIMINAZIONE
 	
 	@GetMapping("/admin/disponibilita/delete/{id}")
 	public String deleteDisponibilita(@PathVariable("id") Long id, Model model) {
 		Disponibilita disponibilita = this.disponibilitaService.findById(id);
 		this.professionistaService.deleteDisponibilita(disponibilita);
 		
-		return this.getDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
+		return this.getAdminDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
 	}
+	
+	// --- MODIFICA
 	
 	@GetMapping("/admin/disponibilita/edit/{id}")
 	public String editDisponibilita(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("disponibilita", this.disponibilitaService.findById(id));
 		
-		return "formModificaDisponibilita";
+		return DIR_ADMIN_PAGES_DISP + "editDisponibilita";
 	}
 	
 	@PostMapping("/admin/disponibilita/edit/{id}")
@@ -81,12 +101,12 @@ public class DisponibilitaController {
 			Disponibilita disponibilita = this.disponibilitaService.findById(id);
 			this.disponibilitaService.update(disponibilita, newDisponibilita);
 			
-			return this.getDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
+			return this.getAdminDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
 		}
 		
 		newDisponibilita.setId(id);
 		model.addAttribute("disponibilita", newDisponibilita);
 		
-		return "formModificaDisponibilita";
+		return DIR_ADMIN_PAGES_DISP + "editDisponibilita";
 	}
 }
