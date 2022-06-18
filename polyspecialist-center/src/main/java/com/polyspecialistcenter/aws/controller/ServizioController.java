@@ -59,9 +59,8 @@ public class ServizioController {
 		if(!bindingResult.hasErrors()) {
 			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.addServizio(professionista, servizio);
-			model.addAttribute("professionista", professionista);
 			
-			return "professionista";
+			return "redirect:/" + DIR_PAGES_PROF;
 		}
 		
 		model.addAttribute("id", id);
