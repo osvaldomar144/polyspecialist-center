@@ -24,6 +24,9 @@ public class ProfessionistaController {
 	@Autowired
 	private ProfessionistaValidator professionistaValidator;
 	
+	
+	/* METHODS GENERIC_USER */
+	
 	@GetMapping("/professionista/{id}")
 	public String getProfessionista(@PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
@@ -38,6 +41,10 @@ public class ProfessionistaController {
 		
 		return "listaProfessionisti";
 	}
+	
+	/* METHODS ADMIN */
+	
+	// --- INSERIMENTO
 	
 	@GetMapping("/admin/professionista/add")
 	public String addProfessionista(Model model) {
@@ -59,6 +66,10 @@ public class ProfessionistaController {
 		
 		return "formNuovoProfessionista";
 	}
+	
+	
+	// --- ELIMINAZIONE
+	
 	/* root permesso / entita / azione / parametri */
 	@GetMapping("/admin/professionista/delete/{id}")
 	public String deleteProfessionista(@PathVariable("id") Long id, Model model) {
@@ -68,6 +79,8 @@ public class ProfessionistaController {
 		
 		return "listaProfessionisti";
 	}
+	
+	// --- MODIFICA
 	
 	@GetMapping("/admin/professionista/edit/{id}")
 	public String getEditProfessionista(@PathVariable("id") Long id, Model model) {
