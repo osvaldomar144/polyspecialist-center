@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.ProfessionistaValidator;
 import com.polyspecialistcenter.aws.model.Professionista;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 
 @Controller
@@ -32,17 +34,32 @@ public class ProfessionistaController {
 		Professionista professionista = professionistaService.findById(id);
 		model.addAttribute("professionista", professionista);
 		
-		return "paginaProfessionista";
+		return DIR_PAGES_PROF + "infoProfessionista";
 	}
 	
 	@GetMapping("/professionisti")
 	public String getProfessionisti(Model model) {
 		model.addAttribute("professionisti", this.professionistaService.findAll());
 		
-		return "listaProfessionisti";
+		return DIR_PAGES_PROF + "elencoProfessionisti";
 	}
 	
 	/* METHODS ADMIN */
+	
+	@GetMapping("/admin/professionista/{id}")
+	public String getAdminProfessionista(@PathVariable("id") Long id, Model model) {
+		Professionista professionista = professionistaService.findById(id);
+		model.addAttribute("professionista", professionista);
+		
+		return DIR_ADMIN_PAGES_PROF + "adminProfessionista";
+	}
+	
+	@GetMapping("/admin/professionisti")
+	public String getAdminProfessionisti(Model model) {
+		model.addAttribute("professionisti", this.professionistaService.findAll());
+		
+		return DIR_ADMIN_PAGES_PROF + "adminElencoProfessionisti";
+	}
 	
 	// --- INSERIMENTO
 	
@@ -50,7 +67,7 @@ public class ProfessionistaController {
 	public String addProfessionista(Model model) {
 		model.addAttribute("professionista", new Professionista());
 		
-		return "formNuovoProfessionista";
+		return DIR_ADMIN_PAGES_PROF + "professionistaForm";
 	}
 	
 	@PostMapping("/admin/professionista/add")
@@ -60,10 +77,10 @@ public class ProfessionistaController {
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.save(professionista);
 			
-			return this.getProfessionisti(model);
+			return this.getAdminProfessionisti(model);
 		}
 		
-		return "formNuovoProfessionista";
+		return DIR_ADMIN_PAGES_PROF + "professionistaForm";
 	}
 	
 	
@@ -75,7 +92,7 @@ public class ProfessionistaController {
 		Professionista professionista = professionistaService.findById(id);
 		this.professionistaService.delete(professionista);
 		
-		return this.getProfessionisti(model);
+		return this.getAdminProfessionisti(model);
 	}
 	
 	// --- MODIFICA
@@ -85,7 +102,7 @@ public class ProfessionistaController {
 		Professionista professionista = professionistaService.findById(id);
 		model.addAttribute("professionista", professionista);
 		
-		return "formModificaProfessionista";
+		return DIR_ADMIN_PAGES_PROF + "editProfessionista";
 	}
 	
 	@PostMapping("/admin/professionista/edit/{id}")
@@ -96,13 +113,13 @@ public class ProfessionistaController {
 			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.update(professionista, newProfessionista);
 			
-			return this.getProfessionisti(model);
+			return this.getAdminProfessionisti(model);
 		}
 		
 		newProfessionista.setId(id);
 		model.addAttribute("professionista", newProfessionista);
 		
-		return "formModificaProfessionista";
+		return DIR_ADMIN_PAGES_PROF + "editProfessionista";
 	}
 	
 }

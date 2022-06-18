@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.ServizioValidator;
 import com.polyspecialistcenter.aws.model.Professionista;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
 import com.polyspecialistcenter.aws.model.Servizio;
+import static com.polyspecialistcenter.aws.model.Servizio.DIR_ADMIN_PAGES_SERVIZIO;
+import static com.polyspecialistcenter.aws.model.Servizio.DIR_PAGES_SERVIZIO;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
 
@@ -29,27 +32,33 @@ public class ServizioController {
 	@Autowired
 	private ProfessionistaService professionistaService;
 	
+	/* METHODS GENERIC_USER */
+	
 	@GetMapping("/servizio/{id}")
 	public String getServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		model.addAttribute("servizio", servizio);
 		
-		return "paginaServizio";
+		return DIR_PAGES_SERVIZIO + "/infoServizio";
 	}
 	
 	@GetMapping("/servizi")
 	public String getServizi(Model model) {
 		model.addAttribute("servizi", this.servizioService.findAll());
 		
-		return "elencoServizi";
+		return DIR_PAGES_SERVIZIO + "elencoServizi";
 	}
+	
+	/* METHODS ADMIN */
+	
+	// --- INSERIMENTO
 	
 	@GetMapping("/admin/servizio/add/{id}")
 	public String selezionaServizio(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("id", id);
 		model.addAttribute("servizio", new Servizio());
 		
-		return "formServizioNuovo";
+		return DIR_ADMIN_PAGES_SERVIZIO + "servizioForm";
 	}
 	
 	@PostMapping("/admin/servizio/add/{id}")
@@ -59,14 +68,15 @@ public class ServizioController {
 		if(!bindingResult.hasErrors()) {
 			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.addServizio(professionista, servizio);
-			model.addAttribute("professionista", professionista);
 			
-			return "professionista";
+			return "redirect:/" + DIR_ADMIN_PAGES_PROF + id;
 		}
 		
 		model.addAttribute("id", id);
-		return "formServizioNuovo";
+		return DIR_ADMIN_PAGES_SERVIZIO + "servizioForm";
 	}
+	
+	// --- ELIMINAZIONE
 	
 	@GetMapping("/admin/servizio/delete/{id}")
 	public String deleteServizio(@PathVariable("id") Long id, Model model) {
@@ -75,15 +85,17 @@ public class ServizioController {
 		this.professionistaService.deleteServizio(professionista, servizio);
 		model.addAttribute("professionista", professionista);
 		
-		return "professionista";
+		return "redirect:/" + DIR_ADMIN_PAGES_PROF + professionista.getId();
 	}
+	
+	// --- MODIFICA
 	
 	@GetMapping("/admin/servizio/edit/{id}")
 	public String getEditServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
 		model.addAttribute("servizio", servizio);
 		
-		return "formModificaServizio";
+		return DIR_ADMIN_PAGES_SERVIZIO + "editServizio";
 	}
 	
 	@PostMapping("/admin/servizio/edit/{id}")
@@ -93,15 +105,14 @@ public class ServizioController {
 		if(!bindingResult.hasErrors()) {
 			Servizio servizio = this.servizioService.findById(id);
 			this.servizioService.update(servizio, newServizio);
-			model.addAttribute("professionista", servizio.getProfessionista());
 			
-			return "professionista";
+			return "redirect:/" + DIR_ADMIN_PAGES_PROF + servizio.getProfessionista().getId();
 		}
 		
 		newServizio.setId(id);
 		model.addAttribute("servizio", newServizio);
 		
-		return "formModificaServizio";
+		return DIR_ADMIN_PAGES_SERVIZIO + "editServizioForm";
 	}
 	
 }

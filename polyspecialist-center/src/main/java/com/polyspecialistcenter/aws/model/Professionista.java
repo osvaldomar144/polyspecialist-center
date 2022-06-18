@@ -13,6 +13,9 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Professionista {
 	
+	public static final String DIR_PAGES_PROF = "information/professionista/";
+	public static final String DIR_ADMIN_PAGES_PROF = "admin/professionista/";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
