@@ -1,6 +1,7 @@
 package com.polyspecialistcenter.aws.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,8 @@ import javax.validation.constraints.Size;
 @Entity
 public class Credentials {
 	
-	public static final String DEFAULT_ROLE = "DEFAULT";
-	
+	/* Ruoli */
+	public static final String GENERIC_USER_ROLE = "GENERIC_USER";
 	public static final String ADMIN_ROLE = "ADMIN";
 	
 	@Id
@@ -21,6 +22,7 @@ public class Credentials {
 	private Long id;
 	
 	@NotBlank
+	@Column (unique = true)
 	@Size(min = 3, max = 15)
 	private String username;
 	
@@ -28,10 +30,9 @@ public class Credentials {
 	@Size(min = 8, max = 255)
 	private String password;
 	
-	@NotBlank
 	private String role;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "credentials")
+	@OneToOne(cascade = CascadeType.ALL)
 	private Utente utente;
 
 	public Long getId() {

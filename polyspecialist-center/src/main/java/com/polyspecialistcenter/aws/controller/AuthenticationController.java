@@ -76,7 +76,7 @@ public class AuthenticationController {
 		if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
 			user.setImg("icon-default-user.png");
 			credentials.setUtente(user);
-			credentialsService.save(credentials);
+			credentialsService.saveCredentials(credentials);
 			return "authentication/registrationSuccessful";
 		}
 		return "authentication/registerForm";

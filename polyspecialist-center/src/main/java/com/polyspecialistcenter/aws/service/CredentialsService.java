@@ -19,11 +19,9 @@ public class CredentialsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@Transactional
-	public Credentials save(Credentials c) {
-		c.setRole(Credentials.DEFAULT_ROLE);
-		c.setPassword(this.passwordEncoder.encode(c.getPassword()));
-		return credentialsRepository.save(c);
+	public Credentials getCredentials(Long id) {
+		Optional<Credentials> result = this.credentialsRepository.findById(id);
+		return result.orElse(null);
 	}
 	
 	public Credentials getCredentials(String username) {
@@ -31,13 +29,18 @@ public class CredentialsService {
 		return result.orElse(null);
 	}
 	
-	public Credentials getCredentials(Long id) {
-        Optional<Credentials> result = this.credentialsRepository.findById(id);
-        return result.orElse(null);
-    }
+	@Transactional
+	public Credentials save(Credentials credentials) {
+		return credentialsRepository.save(credentials);
+	}
 	
-	public boolean alreadyExists(Credentials target) {
-		return credentialsRepository.existsByUsername(target.getUsername());
+	@Transactional
+	public Credentials saveCredentials(Credentials credentials) {
+		if (credentials.getRole() == null) {
+			credentials.setRole(Credentials.GENERIC_USER_ROLE);
+		}
+		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+		return credentialsRepository.save(credentials);
 	}
 
 }
