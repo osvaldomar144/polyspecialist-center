@@ -126,16 +126,13 @@ public class ServizioController {
 			this.servizioValidator.validate(servizio, bindingResult);
 		}
 		
-		
+		servizio.setId(id);
 		if(!bindingResult.hasErrors()) {
-			this.servizioService.update(servizio, servizio);
+			this.servizioService.update(s, servizio);
 			
 			return "redirect:/admin/servizi/" + servizio.getProfessionista().getId();
 		}
-		
-		servizio.setId(id);
-		model.addAttribute("servizio", servizio);
-		
+		servizio.setImg(s.getImg());
 		return DIR_ADMIN_PAGES_SERVIZIO + "editServizio";
 	}
 	
