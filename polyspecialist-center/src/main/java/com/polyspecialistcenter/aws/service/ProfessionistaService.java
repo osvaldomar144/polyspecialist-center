@@ -64,12 +64,6 @@ public class ProfessionistaService {
 		this.professionistaRepository.save(professionista);
 	}
 
-	@Transactional
-	public void deleteDisponibilita(Disponibilita disponibilita) {
-		Professionista professionista = disponibilita.getProfessionista();
-		professionista.getDisponibilita().remove(disponibilita);
-		this.professionistaRepository.save(professionista);
-	}
 
 	@Transactional
 	public void deleteServizio(Professionista professionista, Servizio servizio) {
