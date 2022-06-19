@@ -1,5 +1,8 @@
 package com.polyspecialistcenter.aws.controller;
 
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.ProfessionistaValidator;
 import com.polyspecialistcenter.aws.model.Professionista;
-import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
-import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 
 @Controller
@@ -99,27 +100,32 @@ public class ProfessionistaController {
 	
 	@GetMapping("/admin/professionista/edit/{id}")
 	public String getEditProfessionista(@PathVariable("id") Long id, Model model) {
-		Professionista professionista = professionistaService.findById(id);
-		model.addAttribute("professionista", professionista);
-		
+		model.addAttribute("professionista",this.professionistaService.findById(id));	
 		return DIR_ADMIN_PAGES_PROF + "editProfessionista";
 	}
 	
 	@PostMapping("/admin/professionista/edit/{id}")
-	public String editProfessionista(@Valid @ModelAttribute("professionista") Professionista newProfessionista, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	public String modificaProfessionista(@Valid @ModelAttribute("professionista") Professionista professionista, 
+							   BindingResult bindingResult, 
+							   @PathVariable("id") Long id, 
+							   Model model) {
 		
-		this.professionistaValidator.validate(newProfessionista, bindingResult);
-		if(!bindingResult.hasErrors()) {
-			Professionista professionista = professionistaService.findById(id);
-			this.professionistaService.update(professionista, newProfessionista);
-			
-			return this.getAdminProfessionisti(model);
+		Professionista p = this.professionistaService.findById(id);
+		if(professionista.getPartitaIVA().equals(p.getPartitaIVA())) {
+			professionista.setPartitaIVA("DefPartIVA");
+			this.professionistaValidator.validate(professionista, bindingResult);
+			professionista.setPartitaIVA(p.getPartitaIVA());
+		}else {
+			this.professionistaValidator.validate(professionista, bindingResult);
 		}
 		
-		newProfessionista.setId(id);
-		model.addAttribute("professionista", newProfessionista);
-		
-		return DIR_ADMIN_PAGES_PROF + "editProfessionista";
+		professionista.setId(id);
+		if(!bindingResult.hasErrors()) {
+			this.professionistaService.update(professionista, professionista.getId());
+			return this.getAdminProfessionisti(model);
+		}
+		professionista.setImg(p.getImg());
+		return  DIR_ADMIN_PAGES_PROF + "editProfessionista";
 	}
 	
 }

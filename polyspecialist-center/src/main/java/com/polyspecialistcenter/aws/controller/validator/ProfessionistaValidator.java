@@ -22,7 +22,7 @@ public class ProfessionistaValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		if(professionistaService.alreadyExists((Professionista) target))
-			errors.reject("professionista.duplicato");
+			errors.reject("duplicate.professionista");
 	}
 
 }

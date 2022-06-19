@@ -40,14 +40,17 @@ public class ProfessionistaService {
 		this.professionistaRepository.delete(professionista);
 	}
 	
+	
 	@Transactional
-	public void update(Professionista professionista, Professionista newProfessionista) {
-		professionista.setNome(newProfessionista.getNome());
-		professionista.setCognome(newProfessionista.getCognome());
-		professionista.setImg(newProfessionista.getImg());
-		professionista.setPartitaIVA(newProfessionista.getPartitaIVA());
-		this.professionistaRepository.save(professionista);
+	public void update(Professionista professionista, Long id) {
+		Professionista p = this.professionistaRepository.findById(id).get();
+		p.setNome(professionista.getNome());
+		p.setCognome(professionista.getCognome());
+		p.setProfessione(professionista.getProfessione());
+		p.setPartitaIVA(professionista.getPartitaIVA());
+		this.professionistaRepository.save(p);
 	}
+	
 	
 	@Transactional
 	public void addServizio(Professionista professionista, Servizio servizio) {
