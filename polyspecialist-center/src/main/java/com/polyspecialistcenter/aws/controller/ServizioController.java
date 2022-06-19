@@ -1,5 +1,8 @@
 package com.polyspecialistcenter.aws.controller;
 
+import static com.polyspecialistcenter.aws.model.Servizio.DIR_ADMIN_PAGES_SERVIZIO;
+import static com.polyspecialistcenter.aws.model.Servizio.DIR_PAGES_SERVIZIO;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.polyspecialistcenter.aws.controller.validator.ServizioValidator;
 import com.polyspecialistcenter.aws.model.Prenotazione;
 import com.polyspecialistcenter.aws.model.Professionista;
-import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
-import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
-
 import com.polyspecialistcenter.aws.model.Servizio;
-import static com.polyspecialistcenter.aws.model.Servizio.DIR_ADMIN_PAGES_SERVIZIO;
-import static com.polyspecialistcenter.aws.model.Servizio.DIR_PAGES_SERVIZIO;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
 
@@ -112,20 +110,32 @@ public class ServizioController {
 	}
 	
 	@PostMapping("/admin/servizio/edit/{id}")
-	public String editServizio(@Valid @ModelAttribute("servizio") Servizio newServizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	public String editServizio(@Valid @ModelAttribute("servizio") Servizio servizio, 
+							   BindingResult bindingResult, @PathVariable("id") Long id, 
+							   Model model) {
 		
-		this.servizioValidator.validate(newServizio, bindingResult);
-		if(!bindingResult.hasErrors()) {
-			Servizio servizio = this.servizioService.findById(id);
-			this.servizioService.update(servizio, newServizio);
-			
-			return "redirect:/" + DIR_ADMIN_PAGES_PROF + servizio.getProfessionista().getId();
+		Servizio s = this.servizioService.findById(id);
+		servizio.setProfessionista(s.getProfessionista());
+		
+		if(servizio.getNome().equals(s.getNome())) {
+			servizio.setNome("nomeSerDef");
+			this.servizioValidator.validate(servizio, bindingResult);
+			servizio.setNome(s.getNome());
+		}else {
+			this.servizioValidator.validate(servizio, bindingResult);
 		}
 		
-		newServizio.setId(id);
-		model.addAttribute("servizio", newServizio);
 		
-		return DIR_ADMIN_PAGES_SERVIZIO + "editServizioForm";
+		if(!bindingResult.hasErrors()) {
+			this.servizioService.update(servizio, servizio);
+			
+			return "redirect:/admin/servizi/" + servizio.getProfessionista().getId();
+		}
+		
+		servizio.setId(id);
+		model.addAttribute("servizio", servizio);
+		
+		return DIR_ADMIN_PAGES_SERVIZIO + "editServizio";
 	}
 	
 	@GetMapping("/profile/prenotazione/servizio/{id}")
