@@ -100,6 +100,40 @@
 			</div>
 		</div>
 
+		<!-- ============================================================================ -->
+		<!-- 							MODAL OPERAZIONI								  -->
+		<!-- ============================================================================ -->
+
+		<div th:fragment="modalOperations(oggetto, link1, link2)">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-info" data-toggle="modal" th:data-target="'#modalFor'+${oggetto}" th:text="${oggetto}">
+				
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" th:id="'modalFor'+${oggetto}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Seleziona l'operazione da effettuare</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row ml-4">
+								<a class="btn btn-info mr-2 mb-2" th:href="@{${link1}}" th:text="'Aggiungi ' + ${oggetto}"></a>
+								<a class="btn btn-info mb-2" th:href="@{${link2}}" th:text="'Visualizza elenco ' + ${oggetto}"></a>   		
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-info" data-dismiss="modal">Annulla</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 
 		<!-- ============================================================================ -->
