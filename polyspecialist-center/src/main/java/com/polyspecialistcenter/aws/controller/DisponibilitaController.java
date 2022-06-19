@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.polyspecialistcenter.aws.controller.validator.DisponibilitaValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
-import com.polyspecialistcenter.aws.model.Prenotazione;
 import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
@@ -123,15 +120,5 @@ public class DisponibilitaController {
 		disponibilita.setId(id);
 		return DIR_ADMIN_PAGES_DISP + "editDisponibilita";
 	}
-
-	
-	/*@PostMapping("/profile/disponibilita")
-	public String selectDisponibilita(@RequestParam("idChecked") Disponibilita disponibilita, RedirectAttributes redirect, Model model) {
-		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
-		prenotazione.setDisponibilita(disponibilita);
-		redirect.addFlashAttribute("prenotazione", prenotazione);
-		
-		return "redirect:/profile/prenotazione/add";
-	}*/
 	
 }

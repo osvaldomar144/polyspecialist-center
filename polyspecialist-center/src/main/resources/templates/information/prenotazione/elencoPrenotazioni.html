@@ -29,22 +29,12 @@
 							<th th:text="${prenotazione.professionista.nome} + ' ' + ${prenotazione.professionista.cognome}"></th>
 							<th th:text="${prenotazione.disponibilita.data}"></th>
 							<th th:text="${prenotazione.disponibilita.oraInizio} + '-' + ${prenotazione.disponibilita.oraFine}"></th>
-					   <!-- <th>
-								<div th:replace="fragments/layout.html :: modalOperations(oggetto='servizi', 
-								link1='/admin/servizio/add/' + ${professionista.id},
-								link2='/admin/servizi/' + ${professionista.id})"> </div>
+							<th>
+								<a class="btn btn-success" th:href="@{'/profile/prenotazione/edit/' + ${prenotazione.id}}">Modifica</a>
 							</th>
 							<th>
-								<div th:replace="fragments/layout.html :: modalOperations(oggetto='Disponibilità', 
-								link1='/admin/disponibilita/add/' + ${professionista.id},
-								link2='/admin/disponibilita/' + ${professionista.id})"> </div>
-							</th> 
-							<th>
-								<a class="btn btn-success" th:href="@{'/admin/professionista/edit/' + ${professionista.id}}">Modifica</a>
+								<div th:replace="fragments/layout.html :: modalDelete(nome=${prenotazione.servizio.nome}, link='/profile/delete/' + ${prenotazione.id}, id=${prenotazione.id})"> </div>
 							</th>
-							<th>
-								<div th:replace="fragments/layout.html :: modalDelete(nome=${professionista.nome}, link='/admin/professionista/delete/' + ${professionista.id}, id=${professionista.id})"> </div>
-							</th> -->
 						</tr>
 					</tbody>
 				</table>

@@ -46,4 +46,10 @@ public class UtenteService {
 		this.utenteRepository.save(u);
 	}
 	
+	@Transactional
+	public void deletePrenotazione(Utente u, Prenotazione prenotazione) {
+		u.getPrenotazioni().remove(prenotazione);
+		this.utenteRepository.save(u);
+	}
+	
 }
