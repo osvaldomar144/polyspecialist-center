@@ -27,8 +27,6 @@ public class Prenotazione {
 	
 	@ManyToOne
 	private Utente cliente;
-	
-	private boolean isValid;
 
 	public Long getId() {
 		return id;
@@ -68,14 +66,6 @@ public class Prenotazione {
 
 	public void setCliente(Utente cliente) {
 		this.cliente = cliente;
-	}
-
-	public boolean isValid() {
-		return isValid;
-	}
-
-	public void setValid(boolean isValid) {
-		this.isValid = isValid;
 	}
 
 }

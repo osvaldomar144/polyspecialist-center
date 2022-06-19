@@ -48,7 +48,7 @@ public class PrenotazioneController {
 	@GetMapping("/profile/prenotazioni/{id}")
 	public String getPrenotazioni(@PathVariable("id") Long id, Model model) {
 		Utente utente = this.utenteService.getUser(id);
-		model.addAttribute("prenotazioni", utente.getPrenotazioni());
+		model.addAttribute("prenotazioni", this.prenotazioneService.prenotazioniValide(utente.getPrenotazioni()));
 		
 		return DIR_PAGES_PREN + "elencoPrenotazioni";
 	}
