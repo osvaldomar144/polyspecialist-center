@@ -13,6 +13,6 @@ public interface DisponibilitaRepository extends CrudRepository<Disponibilita, L
 
 	public List<Disponibilita> findByProfessionista(Professionista professionista);
 	
-	public List<Disponibilita> findByProfessionistaAndActiveTrueOrderByOraInizio(Professionista professionista);
+	public List<Disponibilita> findByProfessionistaAndActiveTrueOrderByDataAscOraInizio(Professionista professionista);
 
 }

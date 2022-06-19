@@ -26,7 +26,7 @@ public class DisponibilitaService {
 	}
 	
 	public List<Disponibilita> findByProfAndActive(Professionista professionista) {
-		return this.disponibilitaRepository.findByProfessionistaAndActiveTrueOrderByOraInizio(professionista);
+		return this.disponibilitaRepository.findByProfessionistaAndActiveTrueOrderByDataAscOraInizio(professionista);
 	}
 	
 	public List<Disponibilita> findByProfessionista(Professionista professionista) {
