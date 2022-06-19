@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.polyspecialistcenter.aws.controller.validator.PrenotazioneValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
 import com.polyspecialistcenter.aws.model.Prenotazione;
+import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.model.Utente;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.PrenotazioneService;
+import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
 import com.polyspecialistcenter.aws.service.UtenteService;
 
@@ -33,6 +35,9 @@ public class PrenotazioneController {
 	
 	@Autowired
 	private DisponibilitaService disponibilitaService;
+	
+	@Autowired
+	private ProfessionistaService professionistaService;
 	
 	@Autowired
 	private PrenotazioneValidator prenotazioneValidator;
@@ -81,9 +86,12 @@ public class PrenotazioneController {
 		Utente u = this.utenteService.getUser(idUtente);
 		Servizio s = this.servizioService.findById(idServizio);
 		Disponibilita d = this.disponibilitaService.findById(idDisponibilita);
-		p.setProfessionista(s.getProfessionista());
+		Professionista prof = s.getProfessionista();
+		p.setProfessionista(prof);
 		p.setCliente(u);
 		p.setDisponibilita(d);
+		prof.getDisponibilita().remove(d);
+		this.professionistaService.save(prof);
 		p.setServizio(s);
 		
 		this.prenotazioneValidator.validate(p, bindingResult);
@@ -94,6 +102,21 @@ public class PrenotazioneController {
 		
 		//da modellare in caso di errori
 		return DIR_PAGES_PREN + "riepilogoPrenotazione";
+	}
+	
+	@GetMapping("/profile/delete/{id}")
+	public String deletePrenotazione(@PathVariable("id") Long id, Model model) {
+		Prenotazione p = this.prenotazioneService.findById(id);
+		Utente u = p.getCliente();
+		Disponibilita d = p.getDisponibilita();
+		Professionista prof = p.getProfessionista();
+		prof.getDisponibilita().add(d);
+		this.professionistaService.save(prof);
+		
+		this.utenteService.deletePrenotazione(u, p);
+		this.prenotazioneService.delete(p);
+		
+		return this.getPrenotazioni(u.getId(), model);
 	}
 	
 }
