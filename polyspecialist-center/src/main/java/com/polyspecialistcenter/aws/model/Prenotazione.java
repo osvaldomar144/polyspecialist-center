@@ -8,7 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Appuntamento {
+public class Prenotazione {
+	
+	public static final String DIR_PAGES_PREN = "information/prenotazione/";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,13 +20,13 @@ public class Appuntamento {
 	private Professionista professionista;
 	
 	@ManyToOne
-	private Utente utente;
-	
-	@OneToOne
 	private Servizio servizio;
 	
 	@OneToOne
 	private Disponibilita disponibilita;
+	
+	@ManyToOne
+	private Utente cliente;
 
 	public Long getId() {
 		return id;
@@ -42,14 +44,6 @@ public class Appuntamento {
 		this.professionista = professionista;
 	}
 
-	public Utente getUtente() {
-		return utente;
-	}
-
-	public void setUtente(Utente utente) {
-		this.utente = utente;
-	}
-
 	public Servizio getServizio() {
 		return servizio;
 	}
@@ -64,6 +58,14 @@ public class Appuntamento {
 
 	public void setDisponibilita(Disponibilita disponibilita) {
 		this.disponibilita = disponibilita;
+	}
+
+	public Utente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Utente cliente) {
+		this.cliente = cliente;
 	}
 	
 }

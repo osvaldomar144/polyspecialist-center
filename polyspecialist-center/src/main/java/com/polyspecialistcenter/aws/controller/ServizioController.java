@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.polyspecialistcenter.aws.controller.validator.ServizioValidator;
+import com.polyspecialistcenter.aws.model.Prenotazione;
 import com.polyspecialistcenter.aws.model.Professionista;
 import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
+
 import com.polyspecialistcenter.aws.model.Servizio;
 import static com.polyspecialistcenter.aws.model.Servizio.DIR_ADMIN_PAGES_SERVIZIO;
 import static com.polyspecialistcenter.aws.model.Servizio.DIR_PAGES_SERVIZIO;
@@ -122,6 +126,24 @@ public class ServizioController {
 		model.addAttribute("servizio", newServizio);
 		
 		return DIR_ADMIN_PAGES_SERVIZIO + "editServizioForm";
+	}
+	
+	@GetMapping("/profile/prenotazione/servizio/{id}")
+	public String selectProfessionista(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @PathVariable("id") Long id, Model model) {
+		model.addAttribute("id", id);
+		model.addAttribute("servizi", this.servizioService.findAll());
+		model.addAttribute("prenotazione", prenotazione);
+		
+		return DIR_PAGES_SERVIZIO + "elencoServiziPrenotazione";
+	}
+	
+	@PostMapping("/profile/prenotazione/professionista/{id}")
+	public String selectProfessionista(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @RequestParam("idChecked") Servizio servizio, @PathVariable("id") Long id, Model model) {
+		model.addAttribute("id", id);
+		prenotazione.setServizio(servizio);
+		model.addAttribute("prenotazione", prenotazione);
+		
+		return "redirect:/profile/prenotazione/professionista" + id;
 	}
 	
 }

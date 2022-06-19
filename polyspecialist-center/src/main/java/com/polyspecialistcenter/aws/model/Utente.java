@@ -1,6 +1,5 @@
 package com.polyspecialistcenter.aws.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -33,7 +32,7 @@ public class Utente {
 	private Credentials credentials;
 	
 	@OneToMany
-	private List<Appuntamento> appuntamenti;
+	private List<Prenotazione> prenotazioni;
 	
 	public Long getId() {
 		return id;
@@ -83,12 +82,12 @@ public class Utente {
 		this.credentials = credentials;
 	}
 
-	public List<Appuntamento> getAppuntamenti() {
-		return appuntamenti;
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
 	}
 
-	public void setAppuntamenti(List<Appuntamento> appuntamenti) {
-		this.appuntamenti = appuntamenti;
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni = prenotazioni;
 	}
 
 }

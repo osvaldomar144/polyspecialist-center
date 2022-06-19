@@ -1,11 +1,14 @@
 package com.polyspecialistcenter.aws.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.polyspecialistcenter.aws.model.Disponibilita;
+import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.repository.DisponibilitaRepository;
 
 @Service
@@ -20,6 +23,10 @@ public class DisponibilitaService {
 
 	public Disponibilita findById(Long idDisponibilita) {
 		return this.disponibilitaRepository.findById(idDisponibilita).get();
+	}
+	
+	public List<Disponibilita> findByProfessionista(Professionista professionista) {
+		return this.disponibilitaRepository.findByProfessionista(professionista);
 	}
 	
 	@Transactional
