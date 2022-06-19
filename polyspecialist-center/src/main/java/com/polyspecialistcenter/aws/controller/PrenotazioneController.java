@@ -97,7 +97,7 @@ public class PrenotazioneController {
 		this.prenotazioneValidator.validate(p, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.utenteService.addPrenotazione(u, p);			
-			return this.getPrenotazioni(u.getId(), model);
+			return "redirect:/profile/prenotazioni/" + u.getId();
 		}
 		
 		//da modellare in caso di errori
