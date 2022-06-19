@@ -47,7 +47,7 @@
 								<a class="btn btn-success" th:href="@{'/admin/professionista/edit/' + ${professionista.id}}">Modifica</a>
 							</th>
 							<th>
-								<div th:replace="fragments/layout.html :: modalDelete(nome=${professionista.nome}, link='/admin/professionista/delete/' + ${professionista.id})"> </div>
+								<div th:replace="fragments/layout.html :: modalDelete(nome=${professionista.nome}, link='/admin/professionista/delete/' + ${professionista.id}, id=${professionista.id})"> </div>
 							</th>
 						</tr>
 					</tbody>

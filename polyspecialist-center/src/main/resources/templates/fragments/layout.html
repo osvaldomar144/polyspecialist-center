@@ -127,7 +127,7 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-info" data-dismiss="modal">Annulla</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 						</div>
 					</div>
 				</div>
@@ -140,14 +140,14 @@
 		<!-- 							MODAL CANCELLAZIONE                  					  								-->
 		<!-- ============================================================================ -->
 
-		<div th:fragment="modalDelete(nome, link)">
+		<div th:fragment="modalDelete(nome, link,id)">
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalForDelete">
+			<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="'#modalForDelete'+${id}">
 				Delete
 			</button>
 
 			<!-- Modal -->
-			<div class="modal fade" id="modalForDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal fade" th:id="'modalForDelete'+${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -182,7 +182,7 @@
 		<!-- 							BACK BUTTON                  					  												-->
 		<!-- ============================================================================ -->
 		<div th:fragment="backButton(back, text1, back2, text2)" class="row">
-			<a th:href="@{${back}}" class="btn btn-info" th:text="'« ' + ${text1}"></a>
+			<a th:href="@{${back}}" class="btn btn-info mr-4" th:text="'« ' + ${text1}"></a>
 			<div th:if="${back2 != 'no'}">
 				<a th:href="@{${back2}}" class="btn btn-info" th:text="'« ' + ${text2}"></a>
 			</div>
