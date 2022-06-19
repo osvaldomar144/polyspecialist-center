@@ -63,11 +63,13 @@ public class DisponibilitaController {
 	@PostMapping("/admin/disponibilita/add/{id}")
 	public String addDisponibilita(@Valid @ModelAttribute("disponibilita") Disponibilita disponibilita, BindingResult bindingResult, 
 									@PathVariable("id") Long id, Model model) {
-		//System.out.println(disponibilita.getData().toString() + ' ' + disponibilita.getOraInizio().toString());
+		
+		Professionista professionista = this.professionistaService.findById(id);
+		disponibilita.setProfessionista(professionista);
 		this.disponibilitaValidator.validate(disponibilita, bindingResult);
+		
 		if(!bindingResult.hasErrors()) {
-			this.professionistaService.addDisponibilita(id, disponibilita);
-			
+			this.professionistaService.addDisponibilita(professionista, disponibilita);
 			return this.getAdminDisponibilitaProfessionista(id, model);
 		}
 		

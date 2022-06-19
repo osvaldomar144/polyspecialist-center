@@ -52,15 +52,12 @@ public class ProfessionistaService {
 	@Transactional
 	public void addServizio(Professionista professionista, Servizio servizio) {
 		professionista.getServizi().add(servizio);
-		servizio.setProfessionista(professionista);
 		this.professionistaRepository.save(professionista);
 	}
 	
 	@Transactional
-	public void addDisponibilita(Long id, Disponibilita disponibilita) {
-		Professionista professionista = this.findById(id);
+	public void addDisponibilita(Professionista professionista, Disponibilita disponibilita) {
 		professionista.getDisponibilita().add(disponibilita);
-		disponibilita.setProfessionista(professionista);
 		this.professionistaRepository.save(professionista);
 	}
 

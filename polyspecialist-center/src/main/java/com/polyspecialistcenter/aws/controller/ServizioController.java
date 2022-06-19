@@ -71,9 +71,10 @@ public class ServizioController {
 	@PostMapping("/admin/servizio/add/{id}")
 	public String addServizio(@Valid @ModelAttribute("servizio") Servizio servizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 		
+		Professionista professionista = professionistaService.findById(id);
+		servizio.setProfessionista(professionista);
 		this.servizioValidator.validate(servizio, bindingResult);
 		if(!bindingResult.hasErrors()) {
-			Professionista professionista = professionistaService.findById(id);
 			this.professionistaService.addServizio(professionista, servizio);
 			
 			return "redirect:/" + DIR_ADMIN_PAGES_PROF + id;
