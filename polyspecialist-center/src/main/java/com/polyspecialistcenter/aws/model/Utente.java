@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Utente {
 
+	public static final String DIR_FOLDER_IMG = "user/profilo";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

@@ -37,10 +37,10 @@
 										<a class="nav-link" th:href="@{/}">Home</a>
 									</li>
 									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-										<a class="nav-link" href="#">Servizi</a>
+										<a class="nav-link" th:href="@{/servizi}">Servizi</a>
 									</li>
 									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-										<a class="nav-link" href="#">Appuntamento</a>
+										<a class="nav-link" th:href="@{/profile}">Appuntamento</a>
 									</li>
 										<!--<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Professionisti</a>
@@ -52,7 +52,7 @@
 											</div>
 										</li>-->
 										<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-											<a class="nav-link" href="#">Professionisti</a>
+											<a class="nav-link" th:href="@{/professionisti}">Professionisti</a>
 										</li>
 										<li sec:authorize="!isAuthenticated()" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="btn btn-sm btn-success mb-2" th:href="@{/login}">Login</a>
