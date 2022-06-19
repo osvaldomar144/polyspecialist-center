@@ -22,7 +22,7 @@ public class ServizioValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		if(this.servizioService.alreadyExists((Servizio) target))
-			errors.reject("servizio.duplicato");
+			errors.reject("duplicate.servizio");
 	}
 	
 }
