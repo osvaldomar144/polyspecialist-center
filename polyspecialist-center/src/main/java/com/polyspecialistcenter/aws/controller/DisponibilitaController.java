@@ -86,7 +86,7 @@ public class DisponibilitaController {
 		this.disponibilitaService.delete(disponibilita);
 		this.professionistaService.save(p);	
 		
-		return this.getAdminDisponibilitaProfessionista(p.getId(), model);
+		return "redirect:/admin/disponibilita/" + p.getId();
 	}
 	
 	// --- MODIFICA
