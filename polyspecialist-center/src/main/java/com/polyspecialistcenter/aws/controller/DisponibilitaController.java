@@ -49,6 +49,7 @@ public class DisponibilitaController {
 	@GetMapping("/admin/disponibilita/{id}")
 	public String getAdminDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("disponibilitaList", this.professionistaService.findById(id).getDisponibilita());
+		model.addAttribute("idProfessionista", id);
 		return DIR_ADMIN_PAGES_DISP + "adminElencoDisponibilita";
 	}
 	
@@ -103,19 +104,22 @@ public class DisponibilitaController {
 	}
 	
 	@PostMapping("/admin/disponibilita/edit/{id}")
-	public String editDisponiblita(@Valid @ModelAttribute("disponibilita") Disponibilita newDisponibilita, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	public String editDisponiblita(@Valid @ModelAttribute("disponibilita") Disponibilita disponibilita, 
+								   BindingResult bindingResult, 
+								   @PathVariable("id") Long id, 
+								   Model model) {
 		
-		this.disponibilitaValidator.validate(newDisponibilita, bindingResult);
+		Disponibilita d = this.disponibilitaService.findById(id);
+		disponibilita.setProfessionista(d.getProfessionista());
+		this.disponibilitaValidator.validate(disponibilita, bindingResult);
 		if(!bindingResult.hasErrors()) {
-			Disponibilita disponibilita = this.disponibilitaService.findById(id);
-			this.disponibilitaService.update(disponibilita, newDisponibilita);
 			
-			return this.getAdminDisponibilitaProfessionista(disponibilita.getProfessionista().getId(), model);
+			this.disponibilitaService.update(d, disponibilita);
+			
+			return this.getAdminDisponibilitaProfessionista(d.getProfessionista().getId(), model);
 		}
 		
-		newDisponibilita.setId(id);
-		model.addAttribute("disponibilita", newDisponibilita);
-		
+		disponibilita.setId(id);
 		return DIR_ADMIN_PAGES_DISP + "editDisponibilita";
 	}
 	

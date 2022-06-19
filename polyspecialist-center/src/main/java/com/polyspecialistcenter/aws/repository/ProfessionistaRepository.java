@@ -16,6 +16,6 @@ public interface ProfessionistaRepository extends CrudRepository<Professionista,
 	@Query(value = "SELECT * FROM professionista order by id limit :limit", nativeQuery = true)
 	public List<Professionista> findTopN(@Param("limit") int limit);
 
-	public List<Professionista> findByServizio(Servizio servizio);
+	/*public List<Professionista> findByServizio(Servizio servizio);*/
 
 }

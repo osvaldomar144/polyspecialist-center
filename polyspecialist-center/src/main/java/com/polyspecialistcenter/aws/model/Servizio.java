@@ -26,6 +26,8 @@ public class Servizio {
 	/*@NotBlank*/
 	private Float prezzo;
 	
+	private String img;
+	
 	@ManyToOne
 	private Professionista professionista;
 	
@@ -67,6 +69,14 @@ public class Servizio {
 
 	public void setProfessionista(Professionista professionista) {
 		this.professionista = professionista;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 }

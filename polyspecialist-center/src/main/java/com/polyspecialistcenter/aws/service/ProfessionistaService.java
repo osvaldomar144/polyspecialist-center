@@ -35,9 +35,9 @@ public class ProfessionistaService {
 		return (List<Professionista>) professionistaRepository.findAll();
 	}
 	
-	public List<Professionista> findByServizio(Servizio servizio) {
+	/*public List<Professionista> findByServizio(Servizio servizio) {
 		return this.professionistaRepository.findByServizio(servizio);
-	}
+	}*/
 	
 	@Transactional
 	public void delete(Professionista professionista) {
