@@ -2,6 +2,7 @@ package com.polyspecialistcenter.aws.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +34,7 @@ public class Utente {
 	@OneToOne (mappedBy="utente")
 	private Credentials credentials;
 	
-	@OneToMany
+	@OneToMany (cascade = CascadeType.ALL)
 	private List<Prenotazione> prenotazioni;
 	
 	public Long getId() {

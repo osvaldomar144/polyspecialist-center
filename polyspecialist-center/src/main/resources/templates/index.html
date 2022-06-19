@@ -12,8 +12,19 @@
 		<div class="container">
 			<h2 align="center">I nostri servizi</h2>
 			<ul class="card-list">
+				<li th:each="servizio : ${servizi}" class="card">
+					<a class="card-image" href="#" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+						<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
+					</a>
+					<a class="card-description" href="#">
+						<h4 th:text="${servizio.nome}">Nome Servizio</h4>
+						<p th:text="'Descrizione: ' + ${servizio.descrizione}">Descrizione</p>
+						<p th:text="'Prezzo: ' + ${servizio.prezzo} + '€'"> Prezzo</p>
+						<p th:text="'Professionista: ' + ${servizio.professionista.nome}"> Professionista</p>
+					</a>
+				</li>
 
-				<li class="card">
+	<!--			<li class="card">
 					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-500.jpg">
 						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg" alt="Psychopomp" />
 					</a>
@@ -69,7 +80,7 @@
 						<h3>Jane Doe</h3>
 						<p>Converge</p>
 					</a>
-				</li>
+				</li>-->
 
 			</ul>
 		</div>
@@ -95,7 +106,22 @@
 				<div class="container">
 					<div class="row">
 
-						<div class="col-md-4">
+				<div th:each="professionista : ${professionisti}" class="col-md-4">
+					<div class="team-member">
+						<figure>
+							<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
+							<figcaption class="text-center">
+								<h3 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h3>
+								<p th:text="${professionista.professione}">Professionista</p>
+								<p><a th:href="@{/profile}" class="btn btn-dark">Prenota un Appuntamento</a></p>
+							</figcaption>
+						</figure>
+						<h4 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h4>
+						<p th:text="${professionista.professione}"></p>
+					</div>
+				</div>
+
+						<!--<div class="col-md-4">
 							<div class="team-member">
 								<figure>
 									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
@@ -201,7 +227,7 @@
 								<h4>Lauren Cox</h4>
 								<p>Creative Director</p>
 							</div>
-						</div>
+						</div>-->
 
 
 					</div>

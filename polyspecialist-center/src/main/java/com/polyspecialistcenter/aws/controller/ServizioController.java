@@ -136,6 +136,9 @@ public class ServizioController {
 		return DIR_ADMIN_PAGES_SERVIZIO + "editServizio";
 	}
 	
+	/*----*/
+	
+	
 	@GetMapping("/profile/prenotazione/servizio")
 	public String selectServizio(RedirectAttributes redirect, Model model) {
 		model.addAttribute("servizi", this.servizioService.findAll());
