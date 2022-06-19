@@ -64,18 +64,6 @@ public class ProfessionistaService {
 		this.professionistaRepository.save(professionista);
 	}
 
-	@Transactional
-	public void deleteDisponibilita(Disponibilita disponibilita) {
-		Professionista professionista = disponibilita.getProfessionista();
-		professionista.getDisponibilita().remove(disponibilita);
-		this.professionistaRepository.save(professionista);
-	}
-
-	@Transactional
-	public void deleteServizio(Professionista professionista, Servizio servizio) {
-		professionista.getServizi().remove(servizio);
-		this.professionistaRepository.save(professionista);
-	}
 
 	public List<Professionista> findLastProfessionisti() {
 		return this.professionistaRepository.findTopN(6);

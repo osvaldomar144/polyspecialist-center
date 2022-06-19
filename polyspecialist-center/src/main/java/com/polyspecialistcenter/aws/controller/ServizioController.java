@@ -51,6 +51,13 @@ public class ServizioController {
 	
 	/* METHODS ADMIN */
 	
+	@GetMapping("/admin/servizi/{id}")
+	public String getServiziOfProfessionista(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servizi", this.professionistaService.findById(id).getServizi());
+		
+		return DIR_PAGES_SERVIZIO + "adminElencoServizi";
+	}
+	
 	// --- INSERIMENTO
 	
 	@GetMapping("/admin/servizio/add/{id}")
@@ -81,11 +88,12 @@ public class ServizioController {
 	@GetMapping("/admin/servizio/delete/{id}")
 	public String deleteServizio(@PathVariable("id") Long id, Model model) {
 		Servizio servizio = this.servizioService.findById(id);
-		Professionista professionista = servizio.getProfessionista();
-		this.professionistaService.deleteServizio(professionista, servizio);
-		model.addAttribute("professionista", professionista);
+		Professionista professionista = this.professionistaService.findById(servizio.getProfessionista().getId());
+		professionista.getServizi().remove(servizio);
+		this.servizioService.delete(servizio);
+		this.professionistaService.save(professionista);
 		
-		return "redirect:/" + DIR_ADMIN_PAGES_PROF + professionista.getId();
+		return "redirect:/admin/servizi/" + professionista.getId();
 	}
 	
 	// --- MODIFICA

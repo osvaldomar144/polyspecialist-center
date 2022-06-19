@@ -7,9 +7,8 @@
 	<section class="generic_section">
 		<div class="container">
 			<div class="mb-4">
-				<h2>Elenco Disponibilità del Professionista</h2>
+				<h2>Elenco Disponibilit&agrave; del Professionista</h2>
 			</div>
-			<!-- <a class="btn btn-success btn-lg" th:href="@{/admin/disponibilita/add} + '/' + ${professionista.id}">Aggiungi Nuova Disponibilita</a> -->
 			<br><br>
 			<div class="table-responsive">
 				<table class="table table-striped table-hover">
@@ -21,8 +20,6 @@
 							<th scope="col">Ora Fine</th>
 							<th scope="col"></th>
 							<th scope="col"></th>
-							<th scope="col"></th>
-							<th scope="col"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,10 +29,10 @@
 							<th th:text="${disponibilita.oraInizio}">Cognome</th>
 							<th th:text="${disponibilita.oraFine}">Professione</th>
 							<th>
-								<a class="btn btn-success" th:href="@{'/admin/disponibilita/edit/' + ${disponibilita.id}}">Modifica Disponibilità </a>
+								<a class="btn btn-success" th:href="@{'/admin/disponibilita/edit/' + ${disponibilita.id}}">Modifica Disponibilit&agrave;</a>
 							</th>
 							<th>
-								<a class="btn btn-warning" th:href="@{'/admin/disponibilita/delete/' + ${disponibilita.id}}">Elimina</a>
+								<div th:replace="fragments/layout.html :: modalDelete(nome='la disponibilita', link='/admin/disponibilita/delete/' + ${disponibilita.id})"> </div>
 							</th>
 						</tr>
 					</tbody>
@@ -43,7 +40,7 @@
 			</div>
 			<br>
 
-			<div th:replace="fragments/layout.html :: backButton(back='/', text1='Indietro', back2='no', text2=' ')"></div>
+			<div th:replace="fragments/layout.html :: backButton(back='/admin/professionisti', text1='Indietro', back2='no', text2=' ')"></div>
 		</div> <!-- end container -->
 	</section>
 

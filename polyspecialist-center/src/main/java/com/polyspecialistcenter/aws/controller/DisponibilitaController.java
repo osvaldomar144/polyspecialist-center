@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.DisponibilitaValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
+import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 
@@ -46,7 +47,6 @@ public class DisponibilitaController {
 	@GetMapping("/admin/disponibilita/{id}")
 	public String getAdminDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("disponibilitaList", this.professionistaService.findById(id).getDisponibilita());
-		
 		return DIR_ADMIN_PAGES_DISP + "adminElencoDisponibilita";
 	}
 	
@@ -63,7 +63,7 @@ public class DisponibilitaController {
 	@PostMapping("/admin/disponibilita/add/{id}")
 	public String addDisponibilita(@Valid @ModelAttribute("disponibilita") Disponibilita disponibilita, BindingResult bindingResult, 
 									@PathVariable("id") Long id, Model model) {
-		System.out.println(disponibilita.getData().toString() + ' ' + disponibilita.getOraInizio().toString());
+		//System.out.println(disponibilita.getData().toString() + ' ' + disponibilita.getOraInizio().toString());
 		this.disponibilitaValidator.validate(disponibilita, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.addDisponibilita(id, disponibilita);
@@ -79,11 +79,14 @@ public class DisponibilitaController {
 	
 	@GetMapping("/admin/disponibilita/delete/{id}")
 	public String deleteDisponibilita(@PathVariable("id") Long id, Model model) {
-		Disponibilita disponibilita = this.disponibilitaService.findById(id);
-		Long idProf = disponibilita.getProfessionista().getId();
-		this.professionistaService.deleteDisponibilita(disponibilita);
+		Disponibilita disponibilita = this.disponibilitaService.findById(id);		
+		Professionista p = this.professionistaService.findById(disponibilita.getProfessionista().getId());
 		
-		return this.getAdminDisponibilitaProfessionista(idProf, model);
+		p.getDisponibilita().remove(disponibilita);
+		this.disponibilitaService.delete(disponibilita);
+		this.professionistaService.save(p);	
+		
+		return "redirect:/admin/disponibilita/" + p.getId();
 	}
 	
 	// --- MODIFICA

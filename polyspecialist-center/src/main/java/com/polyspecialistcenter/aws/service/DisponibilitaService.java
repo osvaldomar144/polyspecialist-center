@@ -29,5 +29,10 @@ public class DisponibilitaService {
 		disponibilita.setOraFine(newDisponibilita.getOraFine());
 		this.disponibilitaRepository.save(disponibilita);
 	}
+	
+	@Transactional
+	public void delete(Disponibilita disponibilita) {
+		this.disponibilitaRepository.delete(disponibilita);
+	}
 
 }
