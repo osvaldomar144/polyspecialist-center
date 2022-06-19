@@ -42,26 +42,27 @@ public class PrenotazioneController {
 	
 	@GetMapping("/profile/prenotazione/add/{id}")
 	public String addPrenotazione(@PathVariable("id") Long id, RedirectAttributes redirect) {
-		redirect.addFlashAttribute("prenotazione", new Prenotazione());
+		Prenotazione prenotazione = new Prenotazione();
+		prenotazione.setCliente(this.utenteService.getUser(id));
+		redirect.addFlashAttribute("prenotazione", prenotazione);
 		
-		return "redirect:/profile/prenotazione/servizio" + id;
+		return "redirect:/profile/prenotazione/servizio";
 	}
 	
-	@PostMapping("/profile/prenotazione/add/{id}")
-	public String addPrenotazione(BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	@PostMapping("/profile/prenotazione/add")
+	public String addPrenotazione(BindingResult bindingResult, Model model) {
 		
 		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
-		Utente cliente = this.utenteService.getUser(id);
-		prenotazione.setCliente(cliente);
 		this.prenotazioneValidator.validate(prenotazione, bindingResult);
 		if(!bindingResult.hasErrors()) {
+			Utente cliente = prenotazione.getCliente();
 			this.utenteService.addPrenotazione(cliente, prenotazione);
 			
-			return this.getPrenotazioni(id, model);
+			return this.getPrenotazioni(cliente.getId(), model);
 		}
 		
 		//da modellare in caso di errori
-		return "";
+		return DIR_PAGES_PREN + "riepilogoPrenotazione";
 	}
 	
 }

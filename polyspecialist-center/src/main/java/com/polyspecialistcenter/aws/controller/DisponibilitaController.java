@@ -124,23 +124,23 @@ public class DisponibilitaController {
 		return DIR_ADMIN_PAGES_DISP + "editDisponibilita";
 	}
 	
-	@GetMapping("/profile/prenotazione/disponibilita/{id}")
-	public String selectDisponibilita(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("id", id);
+	@GetMapping("/profile/prenotazione/disponibilita")
+	public String selectDisponibilita(RedirectAttributes redirect, Model model) {
 		
-		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
+		Prenotazione prenotazione = (Prenotazione) redirect.getFlashAttributes().get("prenotazione");
 		model.addAttribute("disponibilitaList", prenotazione.getProfessionista().getDisponibilita());
 		model.addAttribute("prenotazione", prenotazione);
 		
 		return DIR_PAGES_DISP + "elencoDisponibilitaPrenotazione";
 	}
 	
-	@PostMapping("/profile/prenotazione/disponibilita/{id}")
-	public String selectDisponibilita(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @RequestParam("idChecked") Disponibilita disponibilita, @PathVariable("id") Long id, RedirectAttributes redirect) {
+	@PostMapping("/profile/disponibilita")
+	public String selectDisponibilita(@RequestParam("idChecked") Disponibilita disponibilita, RedirectAttributes redirect, Model model) {
+		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
 		prenotazione.setDisponibilita(disponibilita);
 		redirect.addFlashAttribute("prenotazione", prenotazione);
 		
-		return "redirect:/profile/prenotazione/add" + id;
+		return "redirect:/profile/prenotazione/add";
 	}
 	
 }
