@@ -41,7 +41,7 @@ public class Professionista {
 	private List<Disponibilita> disponibilita;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professionista")
-	private List<Appuntamento> appuntamenti; 
+	private List<Prenotazione> prenotazioni; 
 	
 	public Long getId() {
 		return id;
@@ -107,12 +107,12 @@ public class Professionista {
 		this.disponibilita = disponibilita;
 	}
 
-	public List<Appuntamento> getAppuntamenti() {
-		return appuntamenti;
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
 	}
 
-	public void setAppuntamenti(List<Appuntamento> appuntamenti) {
-		this.appuntamenti = appuntamenti;
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni = prenotazioni;
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.polyspecialistcenter.aws.model.Prenotazione;
 import com.polyspecialistcenter.aws.model.Utente;
 import com.polyspecialistcenter.aws.repository.UtenteRepository;
 
@@ -37,6 +38,12 @@ public class UtenteService {
     
 	public boolean alreadyExists(Utente u) {
 		return utenteRepository.existsByNomeAndCognome(u.getNome(), u.getCognome());
+	}
+	
+	@Transactional
+	public void addPrenotazione(Utente u, Prenotazione prenotazione) {
+		u.getPrenotazioni().add(prenotazione);
+		this.utenteRepository.save(u);
 	}
 	
 }
