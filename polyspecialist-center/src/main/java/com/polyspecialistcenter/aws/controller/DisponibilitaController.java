@@ -67,6 +67,7 @@ public class DisponibilitaController {
 		
 		Professionista professionista = this.professionistaService.findById(id);
 		disponibilita.setProfessionista(professionista);
+		disponibilita.setActive(true);
 		this.disponibilitaValidator.validate(disponibilita, bindingResult);
 		
 		if(!bindingResult.hasErrors()) {

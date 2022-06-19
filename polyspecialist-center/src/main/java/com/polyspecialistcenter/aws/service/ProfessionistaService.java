@@ -35,6 +35,7 @@ public class ProfessionistaService {
 		return (List<Professionista>) professionistaRepository.findAll();
 	}
 	
+	
 	@Transactional
 	public void delete(Professionista professionista) {
 		this.professionistaRepository.delete(professionista);
