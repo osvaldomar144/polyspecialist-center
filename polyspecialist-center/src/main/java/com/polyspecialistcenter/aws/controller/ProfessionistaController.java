@@ -127,26 +127,5 @@ public class ProfessionistaController {
 		professionista.setImg(p.getImg());
 		return  DIR_ADMIN_PAGES_PROF + "editProfessionista";
 	}
-<<<<<<< HEAD
-
-=======
 	
-	/*@GetMapping("/profile/prenotazione/professionista/{id}")
-	public String selectProfessionista(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @PathVariable("id") Long id, Model model) {
-		model.addAttribute("id", id);
-		model.addAttribute("professionisti", this.professionistaService.findByServizio(prenotazione.getServizio()));
-		model.addAttribute("prenotazione", prenotazione);
-		
-		return DIR_PAGES_PROF + "elencoProfessionistiPrenotazione";
-	}
-	
-	@PostMapping("/profile/prenotazione/professionista/{id}")
-	public String selectProfessionista(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @RequestParam("idChecked") Professionista professionista, @PathVariable("id") Long id, Model model) {
-		model.addAttribute("id", id);
-		prenotazione.setProfessionista(professionista);
-		model.addAttribute("prenotazione", prenotazione);
-		
-		return "redirect:/profile/prenotazione/disponibilita" + id;
-	}*/
->>>>>>> front-end
 }
