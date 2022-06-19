@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.polyspecialistcenter.aws.model.Professionista;
-import com.polyspecialistcenter.aws.model.Servizio;
 
 public interface ProfessionistaRepository extends CrudRepository<Professionista, Long> {
 
@@ -15,7 +14,5 @@ public interface ProfessionistaRepository extends CrudRepository<Professionista,
 
 	@Query(value = "SELECT * FROM professionista order by id limit :limit", nativeQuery = true)
 	public List<Professionista> findTopN(@Param("limit") int limit);
-
-	/*public List<Professionista> findByServizio(Servizio servizio);*/
 
 }

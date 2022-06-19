@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.polyspecialistcenter.aws.controller.validator.DisponibilitaValidator;
 import com.polyspecialistcenter.aws.model.Disponibilita;
@@ -124,8 +125,10 @@ public class DisponibilitaController {
 	}
 	
 	@GetMapping("/profile/prenotazione/disponibilita/{id}")
-	public String selectDisponibilita(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @PathVariable("id") Long id, Model model) {
+	public String selectDisponibilita(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("id", id);
+		
+		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
 		model.addAttribute("disponibilitaList", prenotazione.getProfessionista().getDisponibilita());
 		model.addAttribute("prenotazione", prenotazione);
 		
@@ -133,10 +136,9 @@ public class DisponibilitaController {
 	}
 	
 	@PostMapping("/profile/prenotazione/disponibilita/{id}")
-	public String selectDisponibilita(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @RequestParam("idChecked") Disponibilita disponibilita, @PathVariable("id") Long id, Model model) {
-		model.addAttribute("id", id);
+	public String selectDisponibilita(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, @RequestParam("idChecked") Disponibilita disponibilita, @PathVariable("id") Long id, RedirectAttributes redirect) {
 		prenotazione.setDisponibilita(disponibilita);
-		model.addAttribute("prenotazione", prenotazione);
+		redirect.addFlashAttribute("prenotazione", prenotazione);
 		
 		return "redirect:/profile/prenotazione/add" + id;
 	}

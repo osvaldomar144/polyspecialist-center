@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.polyspecialistcenter.aws.controller.validator.PrenotazioneValidator;
 import com.polyspecialistcenter.aws.model.Prenotazione;
@@ -40,16 +41,16 @@ public class PrenotazioneController {
 	}
 	
 	@GetMapping("/profile/prenotazione/add/{id}")
-	public String addPrenotazione(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("id", id);
-		model.addAttribute("prenotazione", new Prenotazione());
+	public String addPrenotazione(@PathVariable("id") Long id, RedirectAttributes redirect) {
+		redirect.addFlashAttribute("prenotazione", new Prenotazione());
 		
 		return "redirect:/profile/prenotazione/servizio" + id;
 	}
 	
 	@PostMapping("/profile/prenotazione/add/{id}")
-	public String addPrenotazione(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	public String addPrenotazione(BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 		
+		Prenotazione prenotazione = (Prenotazione) model.getAttribute("prenotazione");
 		Utente cliente = this.utenteService.getUser(id);
 		prenotazione.setCliente(cliente);
 		this.prenotazioneValidator.validate(prenotazione, bindingResult);
