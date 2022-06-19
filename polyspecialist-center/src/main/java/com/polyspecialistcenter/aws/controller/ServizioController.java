@@ -54,8 +54,8 @@ public class ServizioController {
 	@GetMapping("/admin/servizi/{id}")
 	public String getServiziOfProfessionista(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servizi", this.professionistaService.findById(id).getServizi());
-		
-		return DIR_PAGES_SERVIZIO + "adminElencoServizi";
+		model.addAttribute("idProfessionista", id);
+		return DIR_ADMIN_PAGES_SERVIZIO + "adminElencoServizi";
 	}
 	
 	// --- INSERIMENTO
@@ -77,7 +77,7 @@ public class ServizioController {
 		if(!bindingResult.hasErrors()) {
 			this.professionistaService.addServizio(professionista, servizio);
 			
-			return "redirect:/" + DIR_ADMIN_PAGES_PROF + id;
+			return "redirect:/admin/servizi/" + id;
 		}
 		
 		model.addAttribute("id", id);
