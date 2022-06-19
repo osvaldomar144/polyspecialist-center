@@ -116,7 +116,7 @@ public class PrenotazioneController {
 		this.utenteService.deletePrenotazione(u, p);
 		this.prenotazioneService.delete(p);
 		
-		return this.getPrenotazioni(u.getId(), model);
+		return "redirect:/profile/prenotazioni/" + u.getId();
 	}
 	
 }
