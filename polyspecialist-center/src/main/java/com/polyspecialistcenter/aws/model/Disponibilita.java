@@ -26,6 +26,8 @@ public class Disponibilita {
 	@NotBlank
 	private String oraFine;
 	
+	private boolean active;
+	
 	@ManyToOne
 	private Professionista professionista;
 	
@@ -67,6 +69,14 @@ public class Disponibilita {
 
 	public void setProfessionista(Professionista professionista) {
 		this.professionista = professionista;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }

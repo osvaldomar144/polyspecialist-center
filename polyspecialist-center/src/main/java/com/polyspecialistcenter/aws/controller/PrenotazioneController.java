@@ -67,9 +67,10 @@ public class PrenotazioneController {
 		model.addAttribute("idUtente", idUtente);
 		model.addAttribute("idServizio", idServizio);
 		model.addAttribute("prenotazione", new Prenotazione());
-		model.addAttribute("disponibilitaList", this.servizioService.findById(idServizio)
-																	.getProfessionista()
-																	.getDisponibilita());
+		
+		Professionista p = this.servizioService.findById(idServizio).getProfessionista();
+		
+		model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(p));
 		
 		
 		return DIR_PAGES_PREN + "elencoDisponibilitaPrenotazione";
@@ -90,14 +91,13 @@ public class PrenotazioneController {
 		p.setProfessionista(prof);
 		p.setCliente(u);
 		p.setDisponibilita(d);
-		prof.getDisponibilita().remove(d);
-		this.professionistaService.save(prof);
-		p.setServizio(s);
+		p.setServizio(s); 
+		d.setActive(false);
 		
 		this.prenotazioneValidator.validate(p, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.utenteService.addPrenotazione(u, p);			
-			return this.getPrenotazioni(u.getId(), model);
+			return "redirect:/profile/prenotazioni/" + u.getId();
 		}
 		
 		//da modellare in caso di errori
@@ -109,14 +109,13 @@ public class PrenotazioneController {
 		Prenotazione p = this.prenotazioneService.findById(id);
 		Utente u = p.getCliente();
 		Disponibilita d = p.getDisponibilita();
-		Professionista prof = p.getProfessionista();
-		prof.getDisponibilita().add(d);
-		this.professionistaService.save(prof);
+		//Professionista prof = p.getProfessionista();
+		d.setActive(true);
 		
 		this.utenteService.deletePrenotazione(u, p);
 		this.prenotazioneService.delete(p);
 		
-		return this.getPrenotazioni(u.getId(), model);
+		return "redirect:/profile/prenotazioni/" + u.getId();
 	}
 	
 }
