@@ -16,6 +16,8 @@ public class Professionista {
 	public static final String DIR_PAGES_PROF = "information/professionista/";
 	public static final String DIR_ADMIN_PAGES_PROF = "admin/professionista/";
 	
+	public static final String DIR_FOLDER_IMG = "professionista/profili";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

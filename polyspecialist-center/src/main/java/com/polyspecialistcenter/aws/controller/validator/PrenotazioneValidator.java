@@ -22,7 +22,7 @@ public class PrenotazioneValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		if(this.prenotazioneService.alreadyExists((Prenotazione) target))
-			errors.reject("prenotazione.duplicato");
+			errors.reject("duplicate.prenotazione");
 	}
 	
 }

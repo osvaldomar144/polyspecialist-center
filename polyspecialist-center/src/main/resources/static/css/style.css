@@ -717,6 +717,48 @@ h1 span:nth-child(15) {
 	background: rgba(17, 17, 17, 0.1);
 }
 
+.informations-section {
+	height: 400px;
+	margin-top: 7%;
+}
+
+.user-background {
+	background: url("/images/user/background/profile-background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-y: center;
+}
+
+.professionista-background {
+	background: url("/images/professionista/background/professionista-background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-y: center;
+}
+
+.servizio-background {
+	background: url("/images/servizio/background/servizio-background.jpeg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-y: center;
+}
+
+.img-profile-informations {
+	width: 100%;
+	padding: 1.5em 0.5em 0.5em;
+	text-align: center;
+}
+
+.img-profile-informations img {
+	width: 310px;
+	margin-top: 14% !important;
+	border: 4px solid #fff;
+	border-radius: 50%;
+	/*margin: 0 auto;*/
+	background: #cacaca;
+	box-shadow: 0 0 10px rgb(0 0 0/ 70%);
+}
+
 
 
 
@@ -805,6 +847,10 @@ h1 span:nth-child(15) {
 	.tab-pane .card-informations {
 		font-size: 14px;
 	}
+	
+	.img-profile-informations img {
+		margin-top: 18% !important;
+	}
 }
 
 @media ( max-width : 575px) {
@@ -817,10 +863,19 @@ h1 span:nth-child(15) {
 		padding: 1rem 0.5rem;
 	}
 	
+	.img-profile-informations img {
+		margin-top: 25% !important;
+	}
+	
 }
 
 @media ( max-width : 370px) {
 	.generic_section {
 		padding: 37% 3%;
 	}
+	
+	.img-profile-informations img {
+		margin-top: 32% !important;
+	}
+	
 }

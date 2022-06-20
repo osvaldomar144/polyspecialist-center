@@ -4,6 +4,13 @@
 <body>
 	<header th:replace="fragments/layout.html :: navMenu"></header>
 	
+	<section class="user-background informations-section ">
+		<div class="img-profile-informations" >
+			<img th:src="'/images/user/profilo/' + ${user.img}" alt="Profile Utente">
+		</div>
+	</section>
+
+
 	<section class="generic_section">
 		<div class="container">
 			<div class="mb-4">
