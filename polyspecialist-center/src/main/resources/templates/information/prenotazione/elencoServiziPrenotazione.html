@@ -30,7 +30,8 @@
 								<th th:text="${servizio.professionista.nome} + ' ' + ${servizio.professionista.cognome}"></th>
 								<th th:text="${servizio.prezzo}">Prezzo</th>
 								<th>
-									<a th:href="@{'/profile/prenotazione/disponibilita' + '/' + ${servizio.id}}" class="btn btn-success">Seleziona</a>
+									<a th:if="${id == null}" th:href="@{'/profile/prenotazione' + '/' + ${servizio.id}}" class="btn btn-success">Seleziona</a>
+									<a th:unless="${id == null}" th:href="@{'/profile/prenotazione/edit/' + ${id} + '/' + ${servizio.id}}" class="btn btn-success">Seleziona</a>
 								</th>
 							</tr>
 						</tbody>

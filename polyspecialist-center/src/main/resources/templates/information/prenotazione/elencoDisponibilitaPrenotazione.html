@@ -28,10 +28,14 @@
 							<th th:text="${disponibilita.oraInizio}"></th>
 							<th th:text="${disponibilita.oraFine}"></th>
 							<th>
-								<form th:action="@{'/profile/prenotazione/add' + '/' + ${idServizio} + '/' + ${disponibilita.id}}"
-								th:object="${prenotazione}">
+								<form th:if="${idPrenotazione == null}" th:action="@{'/profile/prenotazione/add' + '/' + ${idServizio} + '/' + ${disponibilita.id}}"
+								th:object="${prenotazione}" method="post">
 								<button type="submit" class="btn btn-success">Seleziona</button>
-							</form>
+								</form>
+								<form th:unless="${idPrenotazione == null}" th:action="@{'/profile/prenotazione/edit/' + ${idPrenotazione} + '/' + ${idServizio} + '/' + ${disponibilita.id}}"
+								method="post">
+								<button type="submit" class="btn btn-success">Seleziona</button>
+								</form>
 						</th>
 					</tr>
 				</tbody>

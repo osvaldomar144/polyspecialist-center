@@ -1,9 +1,5 @@
 package com.polyspecialistcenter.aws.service;
 
-import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +23,9 @@ public class PrenotazioneService {
 	public void delete(Prenotazione p) {
 		this.prenotazioneRepository.delete(p);
 	}
-	
-	/* public List<Prenotazione> prenotazioniValide(List<Prenotazione> lista) {
-		Iterator<Prenotazione> i = lista.iterator();
-		while(i.hasNext()) {
-			Prenotazione p = i.next();
-			if(LocalDate.parse(i.next().getDisponibilita().getData()).isBefore(LocalDate.now())) {
-				i.remove();
-				this.prenotazioneRepository.delete(p);
-			}
-			
-			i.next();
-		}
-		
-		return lista;
-	} */
+
+	public void save(Prenotazione prenotazione) {
+		this.prenotazioneRepository.save(prenotazione);
+	}
 
 }

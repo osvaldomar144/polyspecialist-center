@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.polyspecialistcenter.aws.controller.validator.PrenotazioneValidator;
 import com.polyspecialistcenter.aws.model.Credentials;
@@ -63,20 +64,26 @@ public class PrenotazioneController {
         return DIR_PAGES_PREN + "elencoServiziPrenotazione";
     }
 	
-	@GetMapping("/profile/prenotazione/disponibilita/{idS}")
+	@GetMapping("/profile/prenotazione/{idS}")
 	public String selectDisponibilita(@PathVariable("idS") Long idServizio, Model model) {
 		model.addAttribute("idServizio", idServizio);
-		model.addAttribute("prenotazione", new Prenotazione());
-		
+		Long idP = (Long) model.getAttribute("idPrenotazione");
 		Professionista p = this.servizioService.findById(idServizio).getProfessionista();
 		
-		model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(p));
+		if(idP==null) {
+			model.addAttribute("prenotazione", new Prenotazione());
+			model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(p));
+			
+			return DIR_PAGES_PREN + "elencoDisponibilitaPrenotazione";
+		}
 		
+		model.addAttribute("idPrenotazione", idP);
+		model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(p));
 		
 		return DIR_PAGES_PREN + "elencoDisponibilitaPrenotazione";
 	}
 	
-	@GetMapping("/profile/prenotazione/add/{idS}/{idD}")
+	@PostMapping("/profile/prenotazione/add/{idS}/{idD}")
 	public String addPrenotazione(@Valid @ModelAttribute("prenotazione") Prenotazione p,
 								  BindingResult bindingResult, 
 								  @PathVariable("idS") Long idServizio,
@@ -89,20 +96,21 @@ public class PrenotazioneController {
 		Servizio s = this.servizioService.findById(idServizio);
 		Disponibilita d = this.disponibilitaService.findById(idDisponibilita);
 		Professionista prof = s.getProfessionista();
+			
 		p.setProfessionista(prof);
 		p.setCliente(u);
 		p.setDisponibilita(d);
 		p.setServizio(s); 
 		d.setActive(false);
-		
 		this.prenotazioneValidator.validate(p, bindingResult);
+			
 		if(!bindingResult.hasErrors()) {
 			this.utenteService.addPrenotazione(u, p);			
+				
 			return "redirect:/profile/prenotazioni";
 		}
 		
-		//da modellare in caso di errori
-		return DIR_PAGES_PREN + "riepilogoPrenotazione";
+		return "";
 	}
 	
 	@GetMapping("/profile/delete/{id}")
@@ -117,6 +125,40 @@ public class PrenotazioneController {
 		this.prenotazioneService.delete(p);
 		
 		return this.getPrenotazioni(model);
+	}
+	
+	@GetMapping("/profile/prenotazione/edit/{id}")
+	public String editPrenotazione(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("id", id);
+		return this.addPrenotazione(model);
+	}
+	
+	@GetMapping("/profile/prenotazione/edit/{idPrenotazione}/{idServizio}")
+	public String editPrenotazioneDisponibilita(@PathVariable("idPrenotazione") Long idPrenotazione, @PathVariable("idServizio") Long idServizio, Model model) {
+		model.addAttribute("idPrenotazione", idPrenotazione);
+		model.addAttribute("idServizio", idServizio);
+		
+		return this.selectDisponibilita(idServizio, model);
+	}
+	
+	@PostMapping("/profile/prenotazione/edit/{idPrenotazione}/{idServizio}/{idDisponibilita}")
+	public String editPrenotazione(@PathVariable("idPrenotazione") Long idPrenotazione, @PathVariable("idServizio") Long idServizio, @PathVariable("idDisponibilita") Long idDisponibilita, Model model) {
+		Servizio s = this.servizioService.findById(idServizio);
+		Disponibilita d = this.disponibilitaService.findById(idDisponibilita);
+		Professionista prof = s.getProfessionista();
+		
+		Prenotazione prenotazione = this.prenotazioneService.findById(idPrenotazione);
+		prenotazione.setServizio(s);
+		prenotazione.setProfessionista(prof);
+		
+		Disponibilita dispOld = prenotazione.getDisponibilita();
+		dispOld.setActive(true);
+		prenotazione.setDisponibilita(d);
+		d.setActive(false);
+		
+		this.prenotazioneService.save(prenotazione);			
+			
+		return "redirect:/profile/prenotazioni";
 	}
 	
 }
