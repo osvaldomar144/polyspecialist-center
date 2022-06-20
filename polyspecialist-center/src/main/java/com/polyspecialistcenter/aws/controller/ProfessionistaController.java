@@ -1,6 +1,7 @@
 package com.polyspecialistcenter.aws.controller;
 
 import static com.polyspecialistcenter.aws.model.Professionista.DIR_ADMIN_PAGES_PROF;
+import static com.polyspecialistcenter.aws.model.Professionista.DIR_FOLDER_IMG;
 import static com.polyspecialistcenter.aws.model.Professionista.DIR_PAGES_PROF;
 
 import javax.validation.Valid;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.polyspecialistcenter.aws.controller.validator.ProfessionistaValidator;
 import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
+import com.polyspecialistcenter.aws.utility.FileStore;
 
 @Controller
 public class ProfessionistaController {
@@ -72,10 +76,14 @@ public class ProfessionistaController {
 	}
 	
 	@PostMapping("/admin/professionista/add")
-	public String addNewProfessionista(@Valid @ModelAttribute("professionista") Professionista professionista, BindingResult bindingResult, Model model) {
+	public String addNewProfessionista(@Valid @ModelAttribute("professionista") Professionista professionista, 
+									   BindingResult bindingResult, 
+									   @RequestParam("file") MultipartFile file,
+									   Model model) {
 		this.professionistaValidator.validate(professionista, bindingResult);
 		
 		if(!bindingResult.hasErrors()) {
+			professionista.setImg(FileStore.store(file, DIR_FOLDER_IMG));
 			this.professionistaService.save(professionista);
 			
 			return this.getAdminProfessionisti(model);
@@ -91,6 +99,11 @@ public class ProfessionistaController {
 	@GetMapping("/admin/professionista/delete/{id}")
 	public String deleteProfessionista(@PathVariable("id") Long id, Model model) {
 		Professionista professionista = professionistaService.findById(id);
+		FileStore.removeImg(DIR_FOLDER_IMG, professionista.getImg());
+		
+		//eliminazione immagini a cascata
+	    professionista.getServizi().stream().forEach(servizio -> servizio.eliminaImmagine());
+		
 		this.professionistaService.delete(professionista);
 		
 		return this.getAdminProfessionisti(model);
@@ -126,6 +139,21 @@ public class ProfessionistaController {
 		}
 		professionista.setImg(p.getImg());
 		return  DIR_ADMIN_PAGES_PROF + "editProfessionista";
+	}
+	
+	@PostMapping("/admin/professionista/changeImg/{idProf}")
+	public String changeImgChef(@PathVariable("idProf") Long idProf,
+			   					@RequestParam("file") MultipartFile file, 
+			   					Model model) {
+		
+		Professionista p = this.professionistaService.findById(idProf);
+		if(!p.getImg().equals("profili")) {
+			FileStore.removeImg(DIR_FOLDER_IMG, p.getImg());
+		}
+
+		p.setImg(FileStore.store(file, DIR_FOLDER_IMG));
+		this.professionistaService.save(p);
+		return this.getEditProfessionista(idProf, model);
 	}
 	
 }

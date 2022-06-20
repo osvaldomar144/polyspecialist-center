@@ -16,6 +16,12 @@ public class ServizioService {
 	@Autowired
 	private ServizioRepository servizioRepository;
 	
+	@Transactional
+	public void save(Servizio servizio) {
+		this.servizioRepository.save(servizio);
+	}
+	
+	
 	public boolean alreadyExists(Servizio target) {
 		return this.servizioRepository.existsByNomeAndProfessionista(target.getNome(), target.getProfessionista());
 	}

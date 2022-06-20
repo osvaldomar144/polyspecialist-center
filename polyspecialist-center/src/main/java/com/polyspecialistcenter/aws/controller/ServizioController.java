@@ -1,6 +1,7 @@
 package com.polyspecialistcenter.aws.controller;
 
 import static com.polyspecialistcenter.aws.model.Servizio.DIR_ADMIN_PAGES_SERVIZIO;
+import static com.polyspecialistcenter.aws.model.Servizio.DIR_FOLDER_IMG;
 import static com.polyspecialistcenter.aws.model.Servizio.DIR_PAGES_SERVIZIO;
 
 import javax.validation.Valid;
@@ -14,14 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.polyspecialistcenter.aws.controller.validator.ServizioValidator;
-import com.polyspecialistcenter.aws.model.Prenotazione;
 import com.polyspecialistcenter.aws.model.Professionista;
 import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
+import com.polyspecialistcenter.aws.utility.FileStore;
 
 @Controller
 public class ServizioController {
@@ -72,12 +73,17 @@ public class ServizioController {
 	}
 	
 	@PostMapping("/admin/servizio/add/{id}")
-	public String addServizio(@Valid @ModelAttribute("servizio") Servizio servizio, BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
+	public String addServizio(@Valid @ModelAttribute("servizio") Servizio servizio, 
+							  BindingResult bindingResult, 
+							  @PathVariable("id") Long id,
+							  @RequestParam("file") MultipartFile file,
+							  Model model) {
 		
 		Professionista professionista = professionistaService.findById(id);
 		servizio.setProfessionista(professionista);
 		this.servizioValidator.validate(servizio, bindingResult);
 		if(!bindingResult.hasErrors()) {
+			servizio.setImg(FileStore.store(file,DIR_FOLDER_IMG));
 			this.professionistaService.addServizio(professionista, servizio);
 			
 			return "redirect:/admin/servizi/" + id;
@@ -136,10 +142,25 @@ public class ServizioController {
 		return DIR_ADMIN_PAGES_SERVIZIO + "editServizio";
 	}
 	
+	@PostMapping("/admin/servizio/changeImg/{idS}")
+	public String changeImgChef(@PathVariable("idS") Long idS,
+			   					@RequestParam("file") MultipartFile file, 
+			   					Model model) {
+		
+		Servizio s = this.servizioService.findById(idS);
+		if(!s.getImg().equals("profili")) {
+			FileStore.removeImg(DIR_FOLDER_IMG, s.getImg());
+		}
+
+		s.setImg(FileStore.store(file, DIR_FOLDER_IMG));
+		this.servizioService.save(s);
+		return this.getEditServizio(idS, model);
+	}
+	
 	/*----*/
 	
 	
-	@GetMapping("/profile/prenotazione/servizio")
+/*	@GetMapping("/profile/prenotazione/servizio")
 	public String selectServizio(RedirectAttributes redirect, Model model) {
 		model.addAttribute("servizi", this.servizioService.findAll());
 		
@@ -155,6 +176,6 @@ public class ServizioController {
 		redirect.addFlashAttribute("prenotazione", prenotazione);
 		
 		return "redirect:/profile/prenotazione/disponibilita";
-	}
+	}*/
 	
 }

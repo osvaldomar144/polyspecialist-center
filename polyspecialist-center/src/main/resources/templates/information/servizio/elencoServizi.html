@@ -13,9 +13,21 @@
 			<ul class="card-list">
 
 				<li th:each="servizio : ${servizi}" class="card">
-					<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+
+					<div th:if="${servizio.img == 'profili'}">
+						<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+							<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
+						</a>
+					</div>
+					<div th:unless ="${servizio.img == 'profili'}">
+						<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" th:data-image-full="'/images/servizio/profili/' + ${servizio.img}">
+							<img th:src="'/images/servizio/profili/' + ${servizio.img}" alt="Servizio" />
+						</a>
+					</div>
+
+					<!--<a class="card-image" href="#" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
 						<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
-					</a>
+					</a>-->
 					<a class="card-description" th:href="@{'/servizio/' + ${servizio.id}}">
 						<h4 th:text="${servizio.nome}">Nome Servizio</h4>
 						<p th:text="'Descrizione: ' + ${servizio.descrizione}">Descrizione</p>
@@ -23,6 +35,7 @@
 						<p th:text="'Professionista: ' + ${servizio.professionista.nome}"> Professionista</p>
 					</a>
 				</li>
+
 			</ul>
 
 			<br>
