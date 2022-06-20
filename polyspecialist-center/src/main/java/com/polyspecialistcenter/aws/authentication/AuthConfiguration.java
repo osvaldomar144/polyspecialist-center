@@ -54,6 +54,11 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter{
             //se il login ha successo, si viene rediretti al path /default
             .defaultSuccessUrl("/default")
 
+            
+			//google
+			.and().oauth2Login()
+			.loginPage("/login")
+			.defaultSuccessUrl("/")
 
             //logout paragraph: qui definiamo il logout
             .and().logout()
