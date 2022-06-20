@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: headerfiles(title='Polyspecialist Center')"></head>
+<body>	
+
+	<section class="hero-anime section-hero">
+		<header th:replace="fragments/layout.html :: navMenu"></header>
+		<div th:replace="fragments/layout.html :: image-hero"></div>
+	</section>
+
+	<section class="section-servizi">
+		<div class="container">
+			<h2 align="center">I nostri servizi</h2>
+			<ul class="card-list">
+				<li th:each="servizio : ${servizi}" class="card">
+
+					<div th:if="${servizio.img == 'profili'}">
+						<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+							<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
+						</a>
+					</div>
+					<div th:unless ="${servizio.img == 'profili'}">
+						<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" th:data-image-full="'/images/servizio/profili/' + ${servizio.img}">
+							<img th:src="'/images/servizio/profili/' + ${servizio.img}" alt="Servizio" />
+						</a>
+					</div>
+
+					<!--<a class="card-image" href="#" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+						<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
+					</a>-->
+					<a class="card-description" th:href="@{'/servizio/' + ${servizio.id}}">
+						<h4 th:text="${servizio.nome}">Nome Servizio</h4>
+						<p th:text="'Descrizione: ' + ${servizio.descrizione}">Descrizione</p>
+						<p th:text="'Prezzo: ' + ${servizio.prezzo} + '€'"> Prezzo</p>
+						<p th:text="'Professionista: ' + ${servizio.professionista.nome}"> Professionista</p>
+					</a>
+				</li>
+
+	<!--			<li class="card">
+					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-500.jpg">
+						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg" alt="Psychopomp" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>Psychopomp</h3>
+						<p>Japanese Breakfast</p>
+					</a>
+				</li>
+
+				<li class="card">
+					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/lets-go-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/lets-go-500.jpg">
+						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/lets-go-100.jpg" alt="let's go" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>let's go</h3>
+						<p>In Love With A Ghost</p>
+					</a>
+				</li>
+
+				<li class="card">
+					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-500.jpg">
+						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-100.jpg" alt="The Beautiful Game" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>The Beautiful Game</h3>
+						<p>Vulfpeck</p>
+					</a>
+				</li>
+				<li class="card">
+					<a class="card-image" href="#" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+						<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Ginnastica Posturale" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>Ginnatica Posturale</h3>
+						<p>Fisioterapia</p>
+					</a>
+				</li>
+				<li class="card">
+					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-500.jpg">
+						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/beautiful-game-100.jpg" alt="The Beautiful Game" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>The Beautiful Game</h3>
+						<p>Vulfpeck</p>
+					</a>
+				</li>
+
+				<li class="card">
+					<a class="card-image" href="#" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/jane-doe-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/jane-doe-500.jpg">
+						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/jane-doe-100.jpg" alt="Jane Doe" />
+					</a>
+					<a class="card-description" href="#">
+						<h3>Jane Doe</h3>
+						<p>Converge</p>
+					</a>
+				</li>-->
+
+			</ul>
+		</div>
+	</section>
+
+	<section class="section-prenota">
+		<div class="container text-center">
+			<h2>Prenota un appuntamento</h2><br>
+			<h3>Affidati ai nostri professionisti!</h3><br>
+			<a class="btn btn-primary btn-lg" href="#">Prenota</a>
+		</div>
+		
+	</section>
+
+	<section id="team" class="team section-professionisti ">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-md-12">
+					<h2>I Nostri Professionisti</h2>
+					<h3 class="caption gray">sempre alla vanguardia in ogni settore</h3>
+				</div>
+
+				<div class="container">
+					<div class="row">
+
+						<div th:each="professionista : ${professionisti}" class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<!--<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">-->
+									<div th:if="${professionista.img == 'profili'}">
+										<img src="/images/professionista/professionista.jpeg" alt="">
+									</div>
+									<div th:unless ="${professionista.img == 'profili'}">
+										<img th:src="'/images/professionista/profili/' + ${professionista.img}" alt="Profile professionista">
+									</div>
+									<figcaption class="text-center">
+										<h3 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h3>
+										<p th:text="${professionista.professione}">Professionista</p>
+										<p><a th:href="@{/profile}" class="btn btn-dark">Prenota un Appuntamento</a></p>
+									</figcaption>
+								</figure>
+								<h4 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h4>
+								<p th:text="${professionista.professione}"></p>
+							</div>
+						</div>
+
+						<!--<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae asperiores mollitia.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Lauren Cox</h4>
+								<p>Creative Director</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/jessie-barnett.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Neque minima ea, a praesentium saepe nihil maxime quod esse numquam explicabo eligendi.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Jessie Barnett</h4>
+								<p>UI/UX Designer</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/terry-fletcher.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Temporibus dolor, quisquam consectetur molestias, veniam voluptatum. Beatae alias omnis totam.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Terry Fletcher</h4>
+								<p>Web Developer</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae asperiores mollitia.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Lauren Cox</h4>
+								<p>Creative Director</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae asperiores mollitia.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Lauren Cox</h4>
+								<p>Creative Director</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="team-member">
+								<figure>
+									<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">
+									<figcaption>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae asperiores mollitia.</p>
+										<ul>
+											<li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+											<li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+										</ul>
+									</figcaption>
+								</figure>
+								<h4>Lauren Cox</h4>
+								<p>Creative Director</p>
+							</div>
+						</div>-->
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<section th:replace="fragments/layout.html :: mappa"></section>
+
+	<footer th:replace="fragments/layout.html :: fondo"></footer>
+	<div th:replace="fragments/layout.html :: jsFiles"></div>
+</body>
+</html>

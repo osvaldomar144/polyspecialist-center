@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: headerfiles(title='Login')"> </head>
+<body>
+	<header th:replace="fragments/layout.html :: navMenu"></header>
+	
+	<section class="generic_section">
+		<div class="container">
+			<div class="mb-4">
+				<h2>Login</h2>
+			</div>
+				
+
+			<div class="row">
+				<div class="col-md-6">
+
+					<div th:if="${param.error} and ${session}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION']}">
+						<div class="alert alert-dismissible alert-danger error">
+							OPS! Errore nel Login, controlla di aver inserito correttamente le tue credenziali!
+						</div>
+					</div>
+
+					<div class="form_container">
+						<form th:action="@{/login}" method="post">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Username" name="username" required>
+							</div>
+
+							<div class="form-group">
+								<input type="password" class="form-control" placeholder="Password" name="password" required>
+							</div>
+
+							<div><button type="submit" class="btn btn-success">Conferma</button></div>
+						</form>
+					</div>
+					<br><br>
+					<a class="btn btn-outline-success" style="margin: 10px 5px" href="/oauth2/authorization/google">
+						<img style="width: 25px; margin-right: 10px" src="/images/icon/icon-google.png">
+						Login With Google
+					</a>
+					<a class="btn btn-outline-info" style="margin: 10px 5px" href="/oauth2/authorization/facebook">
+						<img style="width: 23px; margin-right: 10px" src="/images/icon/icon-facebook.png">
+						Login With Facebook
+					</a>
+				</div>
+				<div class="col-md-6">
+					<img class="img-login" src="/images/authentication/image-login.png">
+				</div>
+			</div>
+
+			<br>
+			<div th:replace="fragments/layout.html :: backButton(back='/', text1='Indietro', back2='no', text2=' ')"></div>
+		</div> <!-- end container -->
+	</section>
+
+	<footer th:replace="fragments/layout.html :: fondo"></footer>
+	<div th:replace="fragments/layout.html :: jsFiles"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: headerfiles(title='Elenco Professionisti')"></head>
+<body>
+	<header th:replace="fragments/layout.html :: navMenu"></header>
+	
+	<section class="generic_section">
+		<div class="container">
+			<div class="mb-4">
+				<h2>Elenco Professionisti</h2>
+			</div>
+
+			<div class="row">
+
+				<div th:each="professionista : ${professionisti}" class="col-md-4">
+					<div class="team-member">
+						<figure>
+							<!--<img src="http://www.mauritiusdsilva.com/themes/hallooou/assets/images/lauren-cox.jpg" alt="" class="img-responsive">-->
+							<div th:if="${professionista.img == 'profili'}">
+								<img src="/images/professionista/professionista.jpeg" alt="">
+							</div>
+							<div th:unless ="${professionista.img == 'profili'}">
+								<img th:src="'/images/professionista/profili/' + ${professionista.img}" alt="Profile professionista">
+							</div>
+
+							<figcaption class="text-center">
+								<h3 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h3>
+								<p th:text="${professionista.professione}">Professionista</p>
+								<p><a th:href="@{/profile}" class="btn btn-dark">Prenota un Appuntamento</a></p>
+							</figcaption>
+						</figure>
+						<h4 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h4>
+						<p th:text="${professionista.professione}"></p>
+					</div>
+				</div>
+			</div>
+
+			<br>
+
+			<div th:replace="fragments/layout.html :: backButton(back='/', text1='Indietro', back2='no', text2=' ')"></div>
+		</div> <!-- end container -->
+	</section>
+
+	<footer th:replace="fragments/layout.html :: fondo"></footer>
+	<div th:replace="fragments/layout.html :: jsFiles"></div>
+</body>
+</html>
