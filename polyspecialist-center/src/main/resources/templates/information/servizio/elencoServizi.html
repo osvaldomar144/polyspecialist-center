@@ -13,10 +13,10 @@
 			<ul class="card-list">
 
 				<li th:each="servizio : ${servizi}" class="card">
-					<a class="card-image" href="#" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
+					<a class="card-image" th:href="@{'/servizio/' + ${servizio.id}}" data-image-full="/images/servizio/ginnastica-posturale-500.jpeg">
 						<img src="/images/servizio/ginnastica-posturale-500.jpeg" alt="Servizio" />
 					</a>
-					<a class="card-description" href="#">
+					<a class="card-description" th:href="@{'/servizio/' + ${servizio.id}}">
 						<h4 th:text="${servizio.nome}">Nome Servizio</h4>
 						<p th:text="'Descrizione: ' + ${servizio.descrizione}">Descrizione</p>
 						<p th:text="'Prezzo: ' + ${servizio.prezzo} + '€'"> Prezzo</p>

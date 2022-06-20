@@ -42,7 +42,7 @@ public class ServizioController {
 		Servizio servizio = this.servizioService.findById(id);
 		model.addAttribute("servizio", servizio);
 		
-		return DIR_PAGES_SERVIZIO + "/infoServizio";
+		return DIR_PAGES_SERVIZIO + "servizio";
 	}
 	
 	@GetMapping("/servizi")

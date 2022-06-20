@@ -35,7 +35,7 @@ public class ProfessionistaController {
 		Professionista professionista = professionistaService.findById(id);
 		model.addAttribute("professionista", professionista);
 		
-		return DIR_PAGES_PROF + "infoProfessionista";
+		return DIR_PAGES_PROF + "professionista";
 	}
 	
 	@GetMapping("/professionisti")

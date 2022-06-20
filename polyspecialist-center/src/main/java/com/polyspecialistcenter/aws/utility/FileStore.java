@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileStore {
 	
-	//public static final String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/images/";
-	public static final String uploadDirectory = System.getProperty("user.dir")+"/static/images/";
+	public static final String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/images/";
+	//public static final String uploadDirectory = System.getProperty("user.dir")+"/static/images/";
 	
 	//per salvare
 	public static String store(MultipartFile file, String folderName) {
