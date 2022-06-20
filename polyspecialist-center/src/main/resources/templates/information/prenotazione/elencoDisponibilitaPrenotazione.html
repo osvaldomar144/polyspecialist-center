@@ -42,8 +42,12 @@
 			</table>
 		</div>
 		<br>
-
-		<div th:replace="fragments/layout.html :: backButton(back='/profile/prenotazione/add', text1='Indietro', back2='no', text2=' ')"></div>
+		<div th:if="${idPrenotazione == null}">
+			<div th:replace="fragments/layout.html :: backButton(back='/profile/prenotazione/add', text1='Indietro', back2='no', text2=' ')"></div>
+		</div>
+		<div th:unless="${idPrenotazione == null}">
+			<div th:replace="fragments/layout.html :: backButton(back='/profile/prenotazione/edit/' + ${idPrenotazione}, text1='Indietro', back2='no', text2=' ')"></div>
+		</div>
 	</div> <!-- end container -->
 </section>
 
