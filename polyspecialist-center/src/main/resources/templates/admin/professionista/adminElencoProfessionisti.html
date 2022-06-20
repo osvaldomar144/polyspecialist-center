@@ -36,12 +36,14 @@
 							<th>
 								<div th:replace="fragments/layout.html :: modalOperations(oggetto='servizi', 
 								link1='/admin/servizio/add/' + ${professionista.id},
-								link2='/admin/servizi/' + ${professionista.id})"> </div>
+								link2='/admin/servizi/' + ${professionista.id},
+								id=${professionista.id})"> </div>
 							</th>
 							<th>
 								<div th:replace="fragments/layout.html :: modalOperations(oggetto='Disponibilità', 
 								link1='/admin/disponibilita/add/' + ${professionista.id},
-								link2='/admin/disponibilita/' + ${professionista.id})"> </div>
+								link2='/admin/disponibilita/' + ${professionista.id},
+								id=${professionista.id})"> </div>
 							</th>
 							<th>
 								<a class="btn btn-success" th:href="@{'/admin/professionista/edit/' + ${professionista.id}}">Modifica</a>
