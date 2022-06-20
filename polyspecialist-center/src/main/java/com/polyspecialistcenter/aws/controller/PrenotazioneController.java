@@ -20,7 +20,6 @@ import com.polyspecialistcenter.aws.model.Servizio;
 import com.polyspecialistcenter.aws.model.Utente;
 import com.polyspecialistcenter.aws.service.DisponibilitaService;
 import com.polyspecialistcenter.aws.service.PrenotazioneService;
-import com.polyspecialistcenter.aws.service.ProfessionistaService;
 import com.polyspecialistcenter.aws.service.ServizioService;
 import com.polyspecialistcenter.aws.service.UtenteService;
 
@@ -35,9 +34,6 @@ public class PrenotazioneController {
 	
 	@Autowired
 	private DisponibilitaService disponibilitaService;
-	
-	@Autowired
-	private ProfessionistaService professionistaService;
 	
 	@Autowired
 	private PrenotazioneValidator prenotazioneValidator;

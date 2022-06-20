@@ -1,7 +1,5 @@
 package com.polyspecialistcenter.aws.service;
 
-import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -46,21 +44,6 @@ public class DisponibilitaService {
 	@Transactional
 	public void delete(Disponibilita disponibilita) {
 		this.disponibilitaRepository.delete(disponibilita);
-	}
-	
-	public List<Disponibilita> disponibilitaValide(List<Disponibilita> lista) {
-		Iterator<Disponibilita> i = lista.iterator();
-		while(i.hasNext()) {
-			Disponibilita d = i.next();
-			if(LocalDate.parse(d.getData()).isBefore(LocalDate.now())) {
-				i.remove();
-				this.disponibilitaRepository.delete(d);
-			}
-			
-			i.next();
-		}
-		
-		return lista;
 	}
 
 }

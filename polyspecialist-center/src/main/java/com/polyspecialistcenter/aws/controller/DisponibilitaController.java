@@ -37,7 +37,7 @@ public class DisponibilitaController {
 	
 	@GetMapping("/disponibilita/{id}")
 	public String getDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("disponibilitaList", this.disponibilitaService.disponibilitaValide(this.professionistaService.findById(id).getDisponibilita()));
+		model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(this.professionistaService.findById(id)));
 		
 		return DIR_PAGES_DISP + "elencoDisponibilita";
 	}
@@ -46,7 +46,7 @@ public class DisponibilitaController {
 	
 	@GetMapping("/admin/disponibilita/{id}")
 	public String getAdminDisponibilitaProfessionista(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("disponibilitaList", this.disponibilitaService.disponibilitaValide(this.professionistaService.findById(id).getDisponibilita()));
+		model.addAttribute("disponibilitaList", this.disponibilitaService.findByProfAndActive(this.professionistaService.findById(id)));
 		model.addAttribute("idProfessionista", id);
 		return DIR_ADMIN_PAGES_DISP + "adminElencoDisponibilita";
 	}

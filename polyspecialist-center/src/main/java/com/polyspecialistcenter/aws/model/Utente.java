@@ -1,5 +1,6 @@
 package com.polyspecialistcenter.aws.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,10 @@ public class Utente {
 	
 	@OneToMany (cascade = CascadeType.ALL)
 	private List<Prenotazione> prenotazioni;
+	
+	public Utente() {
+		this.prenotazioni = new ArrayList<>();
+	}
 	
 	public Long getId() {
 		return id;

@@ -1,5 +1,8 @@
 package com.polyspecialistcenter.aws.controller.validator;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,6 +24,12 @@ public class DisponibilitaValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		if(LocalDate.parse(((Disponibilita)target).getData()).isBefore(LocalDate.now()))
+			errors.reject("date.disponibilita");
+		
+		if(LocalTime.parse(((Disponibilita)target).getOraInizio()).isBefore(LocalTime.now()) || LocalTime.parse(((Disponibilita)target).getOraFine()).isBefore(LocalTime.parse(((Disponibilita)target).getOraInizio())))
+			errors.reject("hour.disponibilita");
+		
 		if(this.disponibilitaService.alreadyExists((Disponibilita) target))
 			errors.reject("duplicate.disponibilita");
 	}
