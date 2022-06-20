@@ -13,6 +13,8 @@ public class Servizio {
 	public static final String DIR_PAGES_SERVIZIO = "information/servizio/";
 	public static final String DIR_ADMIN_PAGES_SERVIZIO = "admin/servizio/";
 	
+	public static final String DIR_FOLDER_IMG = "servizio/profili";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
