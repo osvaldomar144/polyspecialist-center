@@ -27,7 +27,7 @@ public class DisponibilitaValidator implements Validator {
 		if(LocalDate.parse(((Disponibilita)target).getData()).isBefore(LocalDate.now()))
 			errors.reject("date.disponibilita");
 		
-		if(LocalTime.parse(((Disponibilita)target).getOraInizio()).isBefore(LocalTime.now()) || LocalTime.parse(((Disponibilita)target).getOraFine()).isBefore(LocalTime.parse(((Disponibilita)target).getOraInizio())))
+		if(LocalTime.parse(((Disponibilita)target).getOraFine()).isBefore(LocalTime.parse(((Disponibilita)target).getOraInizio())))
 			errors.reject("hour.disponibilita");
 		
 		if(this.disponibilitaService.alreadyExists((Disponibilita) target))
