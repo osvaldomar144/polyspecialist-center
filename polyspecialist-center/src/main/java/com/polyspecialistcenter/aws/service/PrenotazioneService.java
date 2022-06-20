@@ -28,7 +28,7 @@ public class PrenotazioneService {
 		this.prenotazioneRepository.delete(p);
 	}
 	
-	public List<Prenotazione> prenotazioniValide(List<Prenotazione> lista) {
+	/* public List<Prenotazione> prenotazioniValide(List<Prenotazione> lista) {
 		Iterator<Prenotazione> i = lista.iterator();
 		while(i.hasNext()) {
 			Prenotazione p = i.next();
@@ -41,6 +41,6 @@ public class PrenotazioneService {
 		}
 		
 		return lista;
-	}
+	} */
 
 }
