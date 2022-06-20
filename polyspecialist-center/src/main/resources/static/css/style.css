@@ -759,9 +759,13 @@ h1 span:nth-child(15) {
 	box-shadow: 0 0 10px rgb(0 0 0/ 70%);
 }
 
+.preview-img {
+	margin: 2.5% 0px;
+}
 
-
-
+.preview-img img{
+	max-width: 200px;
+}
 
 /* RESPONSIVE */
 

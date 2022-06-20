@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
+import com.polyspecialistcenter.aws.utility.FileStore;
+
 @Entity
 public class Servizio {
 	
@@ -79,6 +81,10 @@ public class Servizio {
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+	
+	public void eliminaImmagine() {
+		FileStore.removeImg(DIR_FOLDER_IMG, this.getImg());
 	}
 	
 }
