@@ -693,6 +693,33 @@ h1 span:nth-child(15) {
 }
 
 
+/* profile */
+.logout-hover:hover{
+	background-color: #dc3545;
+	color: #fff;
+}
+
+.list-group-item {
+	padding: 2rem 1.5rem;
+	font-family: 'Dancing Script';
+	font-size: 30px;
+	border: 2px solid #ace7ee;
+}
+
+.list-group-item.active {
+	background-color: #14a3b8;
+	border-color: #ace7ee;
+}
+
+.tab-pane {
+	padding: 5% 8%;
+	border-radius: 10px;
+	background: rgba(17, 17, 17, 0.1);
+}
+
+
+
+
 
 /* RESPONSIVE */
 
@@ -765,12 +792,31 @@ h1 span:nth-child(15) {
 	.img-login {
 		margin-top: 20px;
 	}
+	
+	.list-group-item {
+		font-size: 20px;
+		padding: 1.5rem 1rem;
+	}
+	
+	.tab-pane h2 {
+		font-size: 20px;
+	}
+	
+	.tab-pane .card-informations {
+		font-size: 14px;
+	}
 }
 
 @media ( max-width : 575px) {
 	.generic_section {
 		padding: 33% 2%;
 	}
+	
+	.list-group-item {
+		font-size: 14px;
+		padding: 1rem 0.5rem;
+	}
+	
 }
 
 @media ( max-width : 370px) {
