@@ -39,8 +39,8 @@
 									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 										<a class="nav-link" th:href="@{/servizi}">Servizi</a>
 									</li>
-									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-										<a class="nav-link" th:href="@{/profile}">Appuntamento</a>
+									<li sec:authorize="hasAuthority('GENERIC_USER')" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<a class="nav-link" th:href="@{/profile/prenotazioni}">Appuntamenti</a>
 									</li>
 										<!--<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
 											<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Professionisti</a>

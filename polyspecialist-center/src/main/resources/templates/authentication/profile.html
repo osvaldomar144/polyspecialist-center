@@ -19,7 +19,7 @@
 
 			<div class="ml-1 mb-2 row">
 				<a th:if="${credentials.role == 'ADMIN'}" th:href="@{/admin}" class="btn btn-md btn-success mb-2 mr-3">Amministrazione</a>
-				<a th:href="@{'/profile/prenotazioni/' + ${user.id}}" class="btn btn-md btn-success mb-2">I miei Appuntamenti</a>
+				<a th:if="${credentials.role == 'GENERIC_USER'}" th:href="@{'/profile/prenotazioni'}" class="btn btn-md btn-success mb-2">I miei Appuntamenti</a>
 			</div>
 			<div th:if="${okChange != null}">
 				<div th:if="${okChange == true}"class="alert alert-success alert-dismissible pos-profile-alert fade show" role="alert">

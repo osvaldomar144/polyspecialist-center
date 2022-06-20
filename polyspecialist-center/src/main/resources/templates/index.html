@@ -102,7 +102,7 @@
 		<div class="container text-center">
 			<h2>Prenota un appuntamento</h2><br>
 			<h3>Affidati ai nostri professionisti!</h3><br>
-			<a class="btn btn-primary btn-lg" th:href="@{/profile}">Prenota</a>
+			<a class="btn btn-primary btn-lg" th:href="@{/profile/prenotazioni}">Prenota</a>
 		</div>
 		
 	</section>
@@ -131,7 +131,7 @@
 									<figcaption class="text-center">
 										<h3 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h3>
 										<p th:text="${professionista.professione}">Professionista</p>
-										<p><a th:href="@{/profile}" class="btn btn-dark">Prenota un Appuntamento</a></p>
+										<p><a th:href="@{/profile/prenotazioni}" class="btn btn-dark">Prenota un Appuntamento</a></p>
 									</figcaption>
 								</figure>
 								<h4 th:text="${professionista.nome} + ' ' + ${professionista.cognome}"></h4>
